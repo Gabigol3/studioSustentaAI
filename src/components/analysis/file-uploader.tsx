@@ -55,18 +55,16 @@ export function FileUploader({ onFileSelect, disabled }: FileUploaderProps) {
         className={cn(
           "w-full rounded-lg border-2 border-dashed border-muted-foreground/30 p-8 text-center transition-colors duration-300",
           isDragging ? "bg-primary/10 border-primary" : "bg-card",
-          !disabled && "cursor-pointer hover:border-primary/50",
           disabled && "opacity-50 cursor-not-allowed"
         )}
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
         onDragOver={onDragOver}
         onDrop={onDrop}
-        onClick={() => fileInputRef.current?.click()}
       >
         <UploadCloud className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
         <p className="font-semibold text-foreground">Arraste e solte uma imagem aqui</p>
-        <p className="text-sm text-muted-foreground">ou clique para selecionar</p>
+        <p className="text-sm text-muted-foreground">Apenas para arrastar e soltar</p>
         <input
           ref={fileInputRef}
           type="file"
@@ -74,7 +72,6 @@ export function FileUploader({ onFileSelect, disabled }: FileUploaderProps) {
           className="hidden"
           onChange={handleFileChange}
           disabled={disabled}
-          onClick={(e) => e.stopPropagation()}
         />
         <input
             ref={cameraInputRef}
@@ -84,15 +81,14 @@ export function FileUploader({ onFileSelect, disabled }: FileUploaderProps) {
             className="hidden"
             onChange={handleFileChange}
             disabled={disabled}
-            onClick={(e) => e.stopPropagation()}
         />
       </div>
       <div className="flex flex-col sm:flex-row gap-2 w-full">
-          <Button variant="outline" className="w-full" onClick={(e) => { e.stopPropagation(); cameraInputRef.current?.click(); }} disabled={disabled}>
+          <Button variant="outline" className="w-full" onClick={() => cameraInputRef.current?.click()} disabled={disabled}>
               <Camera className="mr-2 h-4 w-4" />
               Tirar Foto
           </Button>
-          <Button variant="outline" className="w-full" onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }} disabled={disabled}>
+          <Button variant="outline" className="w-full" onClick={() => fileInputRef.current?.click()} disabled={disabled}>
               <ImageIcon className="mr-2 h-4 w-4" />
               Escolher da Galeria
           </Button>
