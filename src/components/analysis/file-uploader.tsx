@@ -28,14 +28,17 @@ export function FileUploader({ onFileSelect, disabled }: FileUploaderProps) {
     e.preventDefault();
     if (!disabled) setIsDragging(true);
   };
+
   const onDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
+
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (!disabled) e.dataTransfer.dropEffect = 'copy';
   };
+
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (disabled) return;
@@ -48,18 +51,25 @@ export function FileUploader({ onFileSelect, disabled }: FileUploaderProps) {
 
   const handleCameraClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    if (!disabled && cameraInputRef.current) {
-        cameraInputRef.current.click();
+    if (!disabled) {
+      cameraInputRef.current?.click();
     }
   };
 
-  const handleGalleryClick = (e: React.MouseEvent) => {
+  const handleGalleryClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    if (!disabled && fileInputRef.current) {
-        fileInputRef.current.click();
+    if (!disabled) {
+      fileInputRef.current?.click();
     }
   };
-  
+
+  const handleDropZoneClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (!disabled) {
+        fileInputRef.current?.click();
+    }
+  }
+
   return (
     <div className="flex flex-col items-center gap-4 w-full">
       <div
@@ -73,7 +83,7 @@ export function FileUploader({ onFileSelect, disabled }: FileUploaderProps) {
         onDragLeave={onDragLeave}
         onDragOver={onDragOver}
         onDrop={onDrop}
-        onClick={handleGalleryClick}
+        onClick={handleDropZoneClick}
       >
         <UploadCloud className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
         <p className="font-semibold text-foreground">Arraste e solte uma imagem aqui</p>
