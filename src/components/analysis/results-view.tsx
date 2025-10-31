@@ -8,8 +8,6 @@ import { ScoreCircle } from "./score-circle";
 import { formatNumber } from "@/lib/utils";
 import { Droplets, Footprints, RotateCcw } from "lucide-react";
 import Image from "next/image";
-import { RelatedProductCard } from "./related-product-card";
-import { RECOMMENDED_PRODUCTS } from "@/lib/constants";
 import { Badge } from "../ui/badge";
 import {
     Accordion,
@@ -92,13 +90,6 @@ export function ResultsView({ result, onReset }: ResultsViewProps) {
             </div>
         </div>
       </Card>
-
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold font-headline text-center">Produtos Relacionados</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-            {RECOMMENDED_PRODUCTS.map(product => <RelatedProductCard key={product.name} product={product} />)}
-        </div>
-      </div>
 
       <div className="text-center">
         <Button onClick={onReset} variant="outline">

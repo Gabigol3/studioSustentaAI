@@ -26,6 +26,7 @@ export const NAV_LINKS = [
   { href: '/', label: 'Início' },
   { href: '/ods', label: 'ODS' },
   { href: '/map', label: 'Mapa Verde' },
+  { href: '/products', label: 'Produtos' },
   { href: '/about', label: 'Sobre Nós' },
 ];
 
