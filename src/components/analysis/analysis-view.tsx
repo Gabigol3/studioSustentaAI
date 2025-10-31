@@ -2,16 +2,17 @@
 
 import { analyzeProductImage, type AnalyzeProductImageOutput } from '@/ai/flows/analyze-product-image-for-sustainability';
 import { useToast } from '@/hooks/use-toast';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Input } from '../ui/input';
 import { FileUploader } from './file-uploader';
 import { LoadingView } from './loading-view';
 import { ResultsView } from './results-view';
-import { AlertTriangle, RotateCcw } from 'lucide-react';
+import { AlertTriangle, RotateCcw, X } from 'lucide-react';
 import { useFirestore } from '@/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import Image from 'next/image';
 
 type ViewState = 'form' | 'loading' | 'results' | 'error';
 
@@ -20,9 +21,21 @@ export function AnalysisView() {
   const [analysisResult, setAnalysisResult] = useState<AnalyzeProductImageOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [productName, setProductName] = useState('');
   const { toast } = useToast();
   const firestore = useFirestore();
+
+  useEffect(() => {
+    if (!file) {
+      setImagePreviewUrl(null);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(file);
+    setImagePreviewUrl(objectUrl);
+
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [file]);
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
@@ -72,6 +85,11 @@ export function AnalysisView() {
       };
     } else if (productName) {
        try {
+        if (!firestore) {
+          setError('O serviço de banco de dados não está disponível. Tente novamente mais tarde.');
+          setView('error');
+          return;
+        }
         const productsRef = collection(firestore, 'products');
         const q = query(productsRef, where('name', '==', productName));
         const querySnapshot = await getDocs(q);
@@ -115,6 +133,11 @@ export function AnalysisView() {
     setFile(null);
     setProductName('');
   };
+
+  const clearFile = () => {
+    setFile(null);
+    setImagePreviewUrl(null);
+  }
 
   if (view === 'loading') {
     return <LoadingView />;
@@ -165,7 +188,22 @@ export function AnalysisView() {
             <div className="flex-grow border-t border-muted-foreground/20"></div>
         </div>
 
-        <FileUploader onFileSelect={handleFileSelect} />
+        {imagePreviewUrl ? (
+          <div className="relative aspect-video w-full rounded-lg overflow-hidden">
+            <Image src={imagePreviewUrl} alt="Pré-visualização do produto" fill className="object-cover" />
+            <Button
+              variant="destructive"
+              size="icon"
+              className="absolute top-2 right-2 rounded-full h-8 w-8"
+              onClick={clearFile}
+            >
+              <X className="h-4 w-4" />
+              <span className="sr-only">Remover imagem</span>
+            </Button>
+          </div>
+        ) : (
+          <FileUploader onFileSelect={handleFileSelect} />
+        )}
         
         <Button
           onClick={handleAnalyze}
