@@ -10,6 +10,8 @@ import { FileUploader } from './file-uploader';
 import { LoadingView } from './loading-view';
 import { ResultsView } from './results-view';
 import { AlertTriangle, RotateCcw } from 'lucide-react';
+import { useFirestore } from '@/firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 type ViewState = 'form' | 'loading' | 'results' | 'error';
 
@@ -20,6 +22,7 @@ export function AnalysisView() {
   const [file, setFile] = useState<File | null>(null);
   const [productName, setProductName] = useState('');
   const { toast } = useToast();
+  const firestore = useFirestore();
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
@@ -68,11 +71,40 @@ export function AnalysisView() {
         setView('error');
       };
     } else if (productName) {
-       // The user request specifies DB lookup for product name.
-       // The provided AI flow `analyzeProductImage` requires an image.
-       // As a fallback, we show a message that this feature is in development.
-       setError('A busca por nome de produto ainda não foi implementada. Por favor, envie uma imagem.');
-       setView('error');
+       try {
+        const productsRef = collection(firestore, 'products');
+        const q = query(productsRef, where('name', '==', productName));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+          setError(`Produto "${productName}" não encontrado em nossa base de dados.`);
+          setView('error');
+          return;
+        }
+
+        const productDoc = querySnapshot.docs[0];
+        const productData = productDoc.data();
+
+        const result: AnalyzeProductImageOutput = {
+          productName: productData.name,
+          carbonFootprint: productData.carbonFootprint,
+          waterFootprint: productData.waterFootprint,
+          environmentalImpactDescription: productData.impact, 
+          economyScore: productData.economyScore,
+          societyScore: productData.societyScore,
+          environmentScore: productData.environmentScore,
+          totalScore: productData.finalScore,
+          sustainabilityCategory: productData.impact,
+        };
+        
+        setAnalysisResult(result);
+        setView('results');
+
+       } catch(e) {
+          console.error(e);
+          setError('Ocorreu um erro ao buscar o produto. Tente novamente.');
+          setView('error');
+       }
     }
   };
 
