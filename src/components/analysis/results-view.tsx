@@ -11,6 +11,12 @@ import Image from "next/image";
 import { RelatedProductCard } from "./related-product-card";
 import { RECOMMENDED_PRODUCTS } from "@/lib/constants";
 import { Badge } from "../ui/badge";
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+  } from "@/components/ui/accordion"
 
 type ResultState = AnalyzeProductImageOutput & { image?: string; summary?: string; };
 
@@ -46,7 +52,7 @@ export function ResultsView({ result, onReset }: ResultsViewProps) {
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
                         <div>
                             <CardTitle className="text-3xl font-headline">{result.productName}</CardTitle>
-                            <CardDescription className="mt-1">{result.summary || result.environmentalImpactDescription}</CardDescription>
+                            <CardDescription className="mt-1">{result.summary}</CardDescription>
                         </div>
                         <Badge className={`${category.color} text-sm`}>{category.label}</Badge>
                     </div>
@@ -64,6 +70,15 @@ export function ResultsView({ result, onReset }: ResultsViewProps) {
                             <p className="text-2xl font-bold">{formatNumber(result.waterFootprint)} <span className="text-sm font-normal">litros</span></p>
                         </div>
                     </div>
+
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>Análise Detalhada</AccordionTrigger>
+                            <AccordionContent>
+                            {result.environmentalImpactDescription}
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
 
                     <Separator />
 
