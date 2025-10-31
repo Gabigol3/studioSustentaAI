@@ -5,6 +5,9 @@ import { Button } from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
 import Link from 'next/link';
@@ -23,8 +26,15 @@ export function MobileNav() {
         </Button>
       </SheetTrigger>
       <SheetContent side="left">
-        <div className="flex flex-col gap-8">
+        <SheetHeader>
+          <SheetTitle>
             <Logo />
+          </SheetTitle>
+          <SheetDescription className="sr-only">
+            Menu de navegação principal
+          </SheetDescription>
+        </SheetHeader>
+        <div className="flex flex-col gap-8 mt-8">
             <nav className="flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
                 <Link
