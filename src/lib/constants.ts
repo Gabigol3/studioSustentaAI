@@ -1,5 +1,26 @@
 import type { ImagePlaceholder } from '@/lib/placeholder-images';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import type { LucideIcon } from 'lucide-react';
+import {
+    HeartHandshake,
+    Wheat,
+    HeartPulse,
+    BookOpen,
+    PersonStanding,
+    Droplets,
+    Zap,
+    Briefcase,
+    Factory,
+    ArrowLeftRight,
+    Building,
+    Recycle,
+    CloudSun,
+    Fish,
+    Mountain,
+    Scale,
+    Globe
+} from 'lucide-react';
+
 
 export const NAV_LINKS = [
   { href: '/', label: 'Início' },
@@ -8,24 +29,31 @@ export const NAV_LINKS = [
   { href: '/about', label: 'Sobre Nós' },
 ];
 
-export const ODS_DATA = [
-    { id: 1, title: "Erradicação da Pobreza", description: "Acabar com a pobreza em todas as suas formas, em todos os lugares.", icon: "1" },
-    { id: 2, title: "Fome Zero e Agricultura Sustentável", description: "Acabar com a fome, alcançar a segurança alimentar e melhoria da nutrição e promover a agricultura sustentável.", icon: "2" },
-    { id: 3, title: "Saúde e Bem-Estar", description: "Assegurar uma vida saudável e promover o bem-estar para todos, em todas as idades.", icon: "3" },
-    { id: 4, title: "Educação de Qualidade", description: "Assegurar a educação inclusiva e equitativa e de qualidade, e promover oportunidades de aprendizagem ao longo da vida para todos.", icon: "4" },
-    { id: 5, title: "Igualdade de Gênero", description: "Alcançar a igualdade de gênero e empoderar todas as mulheres e meninas.", icon: "5" },
-    { id: 6, title: "Água Potável e Saneamento", description: "Garantir disponibilidade e manejo sustentável da água e saneamento para todos.", icon: "6" },
-    { id: 7, title: "Energia Limpa e Acessível", description: "Garantir acesso à energia barata, confiável, sustentável e moderna para todos.", icon: "7" },
-    { id: 8, title: "Trabalho Decente e Crescimento Econômico", description: "Promover o crescimento econômico sustentado, inclusivo e sustentável, emprego pleno e produtivo, e trabalho decente para todos.", icon: "8" },
-    { id: 9, title: "Indústria, Inovação e Infraestrutura", description: "Construir infraestrutura resiliente, promover a industrialização inclusiva e sustentável e fomentar a inovação.", icon: "9" },
-    { id: 10, title: "Redução das Desigualdades", description: "Reduzir a desigualdade dentro dos países e entre eles.", icon: "10" },
-    { id: 11, title: "Cidades e Comunidades Sustentáveis", description: "Tornar as cidades e os assentamentos humanos inclusivos, seguros, resilientes e sustentáveis.", icon: "11" },
-    { id: 12, title: "Consumo e Produção Responsáveis", description: "Assegurar padrões de produção e de consumo sustentáveis.", icon: "12" },
-    { id: 13, title: "Ação Contra a Mudança Global do Clima", description: "Tomar medidas urgentes para combater a mudança climática e seus impactos.", icon: "13" },
-    { id: 14, title: "Vida na Água", description: "Conservar e usar sustentavelmente os oceanos, os mares e os recursos marinhos para o desenvolvimento sustentável.", icon: "14" },
-    { id: 15, title: "Vida Terrestre", description: "Proteger, recuperar e promover o uso sustentável dos ecossistemas terrestres.", icon: "15" },
-    { id: 16, title: "Paz, Justiça e Instituições Eficazes", description: "Promover sociedades pacíficas e inclusivas para o desenvolvimento sustentável.", icon: "16" },
-    { id: 17, title: "Povos Indígenas e Tribais", description: "Fortalecer os meios de implementação e revitalizar a parceria global para o desenvolvimento sustentável, com foco nos direitos e bem-estar dos povos indígenas.", imageId: "ods-indigenous", highlighted: true },
+export const ODS_DATA: {
+    id?: number;
+    title: string;
+    description: string;
+    icon?: LucideIcon | string;
+    imageId?: string;
+    highlighted?: boolean;
+}[] = [
+    { id: 1, title: "Erradicação da Pobreza", description: "Acabar com a pobreza em todas as suas formas, em todos os lugares.", icon: HeartHandshake },
+    { id: 2, title: "Fome Zero e Agricultura Sustentável", description: "Acabar com a fome, alcançar a segurança alimentar e melhoria da nutrição e promover a agricultura sustentável.", icon: Wheat },
+    { id: 3, title: "Saúde e Bem-Estar", description: "Assegurar uma vida saudável e promover o bem-estar para todos, em todas as idades.", icon: HeartPulse },
+    { id: 4, title: "Educação de Qualidade", description: "Assegurar a educação inclusiva e equitativa e de qualidade, e promover oportunidades de aprendizagem ao longo da vida para todos.", icon: BookOpen },
+    { id: 5, title: "Igualdade de Gênero", description: "Alcançar a igualdade de gênero e empoderar todas as mulheres e meninas.", icon: PersonStanding },
+    { id: 6, title: "Água Potável e Saneamento", description: "Garantir disponibilidade e manejo sustentável da água e saneamento para todos.", icon: Droplets },
+    { id: 7, title: "Energia Limpa e Acessível", description: "Garantir acesso à energia barata, confiável, sustentável e moderna para todos.", icon: Zap },
+    { id: 8, title: "Trabalho Decente e Crescimento Econômico", description: "Promover o crescimento econômico sustentado, inclusivo e sustentável, emprego pleno e produtivo, e trabalho decente para todos.", icon: Briefcase },
+    { id: 9, title: "Indústria, Inovação e Infraestrutura", description: "Construir infraestrutura resiliente, promover a industrialização inclusiva e sustentável e fomentar a inovação.", icon: Factory },
+    { id: 10, title: "Redução das Desigualdades", description: "Reduzir a desigualdade dentro dos países e entre eles.", icon: ArrowLeftRight },
+    { id: 11, title: "Cidades e Comunidades Sustentáveis", description: "Tornar as cidades e os assentamentos humanos inclusivos, seguros, resilientes e sustentáveis.", icon: Building },
+    { id: 12, title: "Consumo e Produção Responsáveis", description: "Assegurar padrões de produção e de consumo sustentáveis.", icon: Recycle },
+    { id: 13, title: "Ação Contra a Mudança Global do Clima", description: "Tomar medidas urgentes para combater a mudança climática e seus impactos.", icon: CloudSun },
+    { id: 14, title: "Vida na Água", description: "Conservar e usar sustentavelmente os oceanos, os mares e os recursos marinhos para o desenvolvimento sustentável.", icon: Fish },
+    { id: 15, title: "Vida Terrestre", description: "Proteger, recuperar e promover o uso sustentável dos ecossistemas terrestres.", icon: Mountain },
+    { id_16: 16, title: "Paz, Justiça e Instituições Eficazes", description: "Promover sociedades pacíficas e inclusivas para o desenvolvimento sustentável.", icon: Scale },
+    { id: 17, title: "Povos Indígenas e Tribais", description: "Fortalecer os meios de implementação e revitalizar a parceria global para o desenvolvimento sustentável, com foco nos direitos e bem-estar dos povos indígenas.", imageId: "ods-indigenous", highlighted: true, icon: Globe },
 ];
 
 export const TEAM_MEMBERS = [

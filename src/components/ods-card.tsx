@@ -2,22 +2,24 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { cn } from '@/lib/utils';
+import type { LucideIcon } from 'lucide-react';
 
 type Ods = {
   id?: number;
   title: string;
   description: string;
-  icon?: string;
+  icon?: LucideIcon | string;
   imageId?: string;
   highlighted?: boolean;
 }
 
 export function OdsCard({ ods }: { ods: Ods }) {
     const odsImage = ods.imageId ? PlaceHolderImages.find(p => p.id === ods.imageId) : null;
+    const Icon = ods.icon as LucideIcon;
   
   return (
     <Card className={cn(
-        "flex flex-col h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1",
+        "flex flex-col h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group",
         ods.highlighted && "bg-primary/10 border-primary shadow-lg"
     )}>
       <CardHeader>
@@ -36,7 +38,11 @@ export function OdsCard({ ods }: { ods: Ods }) {
               "w-16 h-16 rounded-lg flex items-center justify-center mb-4",
               ods.highlighted ? "bg-primary/20" : "bg-secondary"
             )}>
+              {Icon && typeof Icon !== 'string' ? (
+                <Icon className="w-8 h-8 text-primary" />
+              ) : (
                 <span className="text-2xl font-bold text-muted-foreground">{ods.icon}</span>
+              )}
             </div>
         )}
         <CardTitle className="text-xl font-headline">{ods.title}</CardTitle>
