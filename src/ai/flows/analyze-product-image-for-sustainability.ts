@@ -21,17 +21,17 @@ const AnalyzeProductImageInputSchema = z.object({
 export type AnalyzeProductImageInput = z.infer<typeof AnalyzeProductImageInputSchema>;
 
 const AnalyzeProductImageOutputSchema = z.object({
-  productName: z.string().describe('The name of the product.'),
-  carbonFootprint: z.number().describe('The carbon footprint of the product in kg CO₂eq.'),
-  waterFootprint: z.number().describe('The water footprint of the product in liters.'),
+  productName: z.string().describe('O nome do produto.'),
+  carbonFootprint: z.number().describe('A pegada de carbono do produto em kg CO₂eq.'),
+  waterFootprint: z.number().describe('A pegada hídrica do produto em litros.'),
   environmentalImpactDescription: z
     .string()
-    .describe('A summarized description of the environmental impact of the product.'),
-  economyScore: z.number().describe('A score representing the economic sustainability of the product.'),
-  societyScore: z.number().describe('A score representing the social impact of the product.'),
-  environmentScore: z.number().describe('A score representing the environmental impact of the product.'),
-  totalScore: z.number().describe('The total sustainability score of the product (0-100).'),
-  sustainabilityCategory: z.string().describe('The sustainability category of the product (e.g., Sustainable, Regular, High Impact).'),
+    .describe('Uma descrição resumida do impacto ambiental do produto.'),
+  economyScore: z.number().describe('Uma pontuação que representa a sustentabilidade econômica do produto.'),
+  societyScore: z.number().describe('Uma pontuação que representa o impacto social do produto.'),
+  environmentScore: z.number().describe('Uma pontuação que representa o impacto ambiental do produto.'),
+  totalScore: z.number().describe('A pontuação total de sustentabilidade do produto (0-100).'),
+  sustainabilityCategory: z.string().describe('A categoria de sustentabilidade do produto (por exemplo, Sustentável, Regular, Alto Impacto).'),
 });
 
 export type AnalyzeProductImageOutput = z.infer<typeof AnalyzeProductImageOutputSchema>;
@@ -44,25 +44,25 @@ const analyzeProductImagePrompt = ai.definePrompt({
   name: 'analyzeProductImagePrompt',
   input: {schema: AnalyzeProductImageInputSchema},
   output: {schema: AnalyzeProductImageOutputSchema},
-  prompt: `You are an AI assistant designed to analyze the environmental impact of products based on images.
+  prompt: `Você é um assistente de IA projetado para analisar o impacto ambiental de produtos com base em imagens. Forneça todas as respostas em português.
 
-  Analyze the provided product image and provide the following information:
+  Analise a imagem do produto fornecida e forneça as seguintes informações:
 
-  - productName: The name of the product in the image.
-  - carbonFootprint: The estimated carbon footprint of the product (in kg CO₂eq).
-  - waterFootprint: The estimated water footprint of the product (in liters).
-  - environmentalImpactDescription: A short description of the product's environmental impact.
-  - economyScore: A score (0-100) representing the economic sustainability of the product.
-  - societyScore: A score (0-100) representing the social impact of the product.
-  - environmentScore: A score (0-100) representing the direct ecological damages, such as pollution and waste.
-  - totalScore: A score (0-100) representing the total sustainability of the product.
-  - sustainabilityCategory: A category based on the totalScore. If the score is:
-    - 70-100: Sustainable
+  - productName: O nome do produto na imagem.
+  - carbonFootprint: A pegada de carbono estimada do produto (em kg CO₂eq).
+  - waterFootprint: A pegada hídrica estimada do produto (em litros).
+  - environmentalImpactDescription: Uma breve descrição do impacto ambiental do produto.
+  - economyScore: Uma pontuação (0-100) representando a sustentabilidade econômica do produto.
+  - societyScore: Uma pontuação (0-100) representando o impacto social do produto.
+  - environmentScore: Uma pontuação (0-100) representando os danos ecológicos diretos, como poluição e resíduos.
+  - totalScore: Uma pontuação (0-100) representando a sustentabilidade total do produto.
+  - sustainabilityCategory: Uma categoria com base no totalScore. Se a pontuação for:
+    - 70-100: Sustentável
     - 40-69: Regular
-    - 0-39: High Impact
+    - 0-39: Alto Impacto
 
-  Here is the product image: {{media url=productDataUri}}
-  Please analyze the product shown in the image and provide the requested information.
+  Aqui está a imagem do produto: {{media url=productDataUri}}
+  Por favor, analise o produto mostrado na imagem e forneça as informações solicitadas em português.
   `,
 });
 
