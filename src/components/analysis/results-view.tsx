@@ -8,28 +8,18 @@ import { ScoreCircle } from "./score-circle";
 import { formatNumber } from "@/lib/utils";
 import { Droplets, Footprints, RotateCcw } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { RelatedProductCard } from "./related-product-card";
 import { RECOMMENDED_PRODUCTS } from "@/lib/constants";
 import { Badge } from "../ui/badge";
 
+type ResultState = AnalyzeProductImageOutput & { image?: string; summary?: string; };
+
 interface ResultsViewProps {
-  result: AnalyzeProductImageOutput;
+  result: ResultState;
   onReset: () => void;
-  uploadedImage: File | null;
 }
 
-export function ResultsView({ result, onReset, uploadedImage }: ResultsViewProps) {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (uploadedImage) {
-      const url = URL.createObjectURL(uploadedImage);
-      setImageUrl(url);
-      return () => URL.revokeObjectURL(url);
-    }
-  }, [uploadedImage]);
-
+export function ResultsView({ result, onReset }: ResultsViewProps) {
   const scoreCategory = (score: number) => {
     if (score >= 70) return { label: "Produto Sustentável", color: "bg-success text-success-foreground" };
     if (score >= 40) return { label: "Regular", color: "bg-warning text-warning-foreground" };
@@ -43,8 +33,12 @@ export function ResultsView({ result, onReset, uploadedImage }: ResultsViewProps
       <Card className="shadow-lg overflow-hidden">
         <div className="grid md:grid-cols-5">
             <div className="md:col-span-2 relative min-h-[250px] md:min-h-0">
-                {imageUrl && (
-                    <Image src={imageUrl} alt={result.productName} fill className="object-cover" />
+                {result.image ? (
+                    <Image src={result.image} alt={result.productName} fill className="object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-secondary flex items-center justify-center">
+                    <span className="text-muted-foreground">Imagem não disponível</span>
+                  </div>
                 )}
             </div>
             <div className="md:col-span-3">
@@ -52,7 +46,7 @@ export function ResultsView({ result, onReset, uploadedImage }: ResultsViewProps
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
                         <div>
                             <CardTitle className="text-3xl font-headline">{result.productName}</CardTitle>
-                            <CardDescription className="mt-1">{result.environmentalImpactDescription}</CardDescription>
+                            <CardDescription className="mt-1">{result.summary || result.environmentalImpactDescription}</CardDescription>
                         </div>
                         <Badge className={`${category.color} text-sm`}>{category.label}</Badge>
                     </div>

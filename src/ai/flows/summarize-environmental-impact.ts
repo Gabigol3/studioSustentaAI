@@ -12,18 +12,15 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const SummarizeEnvironmentalImpactInputSchema = z.object({
-  pegadaCarbono: z.number().describe('The carbon footprint of the product in kg CO₂eq.'),
-  pegadaHidrica: z.number().describe('The water footprint of the product in liters.'),
-  impacto: z.string().describe('A general description of the product impact (e.g., low, medium, high).'),
-  economia: z.number().describe('Economic sustainability score (0-100).'),
-  sociedade: z.number().describe('Social impact score (0-100).'),
-  meioAmbiente: z.number().describe('Environmental impact score (0-100).'),
-  pontuacaoFinal: z.number().describe('The final sustainability score of the product (0-100).'),
+  productName: z.string().describe('O nome do produto.'),
+  carbonFootprint: z.number().describe('A pegada de carbono do produto em kg CO₂eq.'),
+  waterFootprint: z.number().describe('A pegada hídrica do produto em litros.'),
+  sustainabilityCategory: z.string().describe('A categoria de sustentabilidade do produto (Sustentável, Regular, Alto Impacto).'),
 });
 export type SummarizeEnvironmentalImpactInput = z.infer<typeof SummarizeEnvironmentalImpactInputSchema>;
 
 const SummarizeEnvironmentalImpactOutputSchema = z.object({
-  summary: z.string().describe('A summarized description of the product\'s environmental impact.'),
+  summary: z.string().describe('Um resumo conciso e informativo do impacto ambiental do produto.'),
 });
 export type SummarizeEnvironmentalImpactOutput = z.infer<typeof SummarizeEnvironmentalImpactOutputSchema>;
 
@@ -37,18 +34,20 @@ const prompt = ai.definePrompt({
   name: 'summarizeEnvironmentalImpactPrompt',
   input: {schema: SummarizeEnvironmentalImpactInputSchema},
   output: {schema: SummarizeEnvironmentalImpactOutputSchema},
-  prompt: `You are an AI assistant specializing in summarizing the environmental impact of products.
+  prompt: `Você é um especialista em comunicação de sustentabilidade. Sua tarefa é criar um resumo curto, claro e impactante sobre o impacto ambiental de um produto, usando os dados fornecidos. A resposta deve ser em português.
 
-  Based on the following data, create a concise and informative summary (in Portuguese) of the product's environmental impact.
-  The summary should include the overall impact level, and one key aspect (high emissions, low water usage, etc.)
+O resumo deve ter no máximo 2 frases.
 
-  Carbon Footprint: {{pegadaCarbono}} kg CO₂eq
-  Water Footprint: {{pegadaHidrica}} liters
-  Impact Level: {{impacto}}
-  Economic Score: {{economia}}
-  Social Score: {{sociedade}}
-  Environmental Score: {{meioAmbiente}}
-  Final Score: {{pontuacaoFinal}}
+Dados do Produto:
+- Nome: {{{productName}}}
+- Pegada de Carbono: {{carbonFootprint}} kg CO₂eq
+- Pegada Hídrica: {{waterFootprint}} litros
+- Categoria de Sustentabilidade: {{sustainabilityCategory}}
+
+Exemplo de Saída:
+"A produção de um(a) {{{productName}}} tem um impacto classificado como '{{sustainabilityCategory}}'. Envolve uma pegada de carbono de {{carbonFootprint}} kg CO₂eq e um consumo de {{waterFootprint}} litros de água."
+
+Crie um resumo similar para o produto fornecido.
   `,
 });
 

@@ -14,12 +14,15 @@ import { useFirestore } from '@/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import Image from 'next/image';
 import { analyzeProductText } from '@/ai/flows/analyze-product-text-for-sustainability';
+import { generateProductImage } from '@/ai/flows/generate-product-image';
+import { summarizeEnvironmentalImpact } from '@/ai/flows/summarize-environmental-impact';
 
 type ViewState = 'form' | 'loading' | 'results' | 'error';
+type ResultState = AnalyzeProductImageOutput & { image?: string; summary?: string; };
 
 export function AnalysisView() {
   const [view, setView] = useState<ViewState>('form');
-  const [analysisResult, setAnalysisResult] = useState<AnalyzeProductImageOutput | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<ResultState | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
@@ -60,77 +63,69 @@ export function AnalysisView() {
     setView('loading');
     setError(null);
     
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = async () => {
-        const dataUri = reader.result as string;
-        try {
-          const result = await analyzeProductImage({ productDataUri: dataUri });
-          if (!result || !result.productName) {
-            setError('Produto não reconhecido. Envie uma imagem de um item real.');
-            setView('error');
-          } else {
-            setAnalysisResult(result);
-            setView('results');
-          }
-        } catch (e) {
-          console.error(e);
-          setError('Ocorreu um erro na análise. Por favor, tente novamente mais tarde.');
-          setView('error');
-        }
-      };
-      reader.onerror = () => {
-        setError('Erro ao processar o arquivo de imagem.');
-        setView('error');
-      };
-    } else if (productName) {
-       try {
+    try {
+      let result: AnalyzeProductImageOutput;
+      let imageUrl: string | undefined;
+
+      if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        imageUrl = await new Promise<string>((resolve, reject) => {
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => reject('Erro ao processar o arquivo de imagem.');
+        });
+        result = await analyzeProductImage({ productDataUri: imageUrl });
+
+      } else if (productName) {
         if (!firestore) {
-          setError('O serviço de banco de dados não está disponível. Tente novamente mais tarde.');
-          setView('error');
-          return;
+          throw new Error('O serviço de banco de dados não está disponível. Tente novamente mais tarde.');
         }
+
         const productsRef = collection(firestore, 'products');
         const q = query(productsRef, where('name', '==', productName));
         const querySnapshot = await getDocs(q);
 
-        if (querySnapshot.empty) {
-            // If not in DB, use AI to analyze the text
-            const result = await analyzeProductText({ productName });
-            if (!result || !result.productName) {
-                setError(`Não foi possível analisar o produto "${productName}".`);
-                setView('error');
-            } else {
-                setAnalysisResult(result);
-                setView('results');
-            }
-            return;
+        if (!querySnapshot.empty) {
+            const productData = querySnapshot.docs[0].data();
+            result = {
+              productName: productData.name,
+              carbonFootprint: productData.carbonFootprint,
+              waterFootprint: productData.waterFootprint,
+              environmentalImpactDescription: productData.impact, 
+              economyScore: productData.economyScore,
+              societyScore: productData.societyScore,
+              environmentScore: productData.environmentScore,
+              totalScore: productData.finalScore,
+              sustainabilityCategory: productData.impact,
+            };
+            imageUrl = productData.imageUrl;
+        } else {
+            result = await analyzeProductText({ productName });
+            const imageResult = await generateProductImage({ productName: result.productName });
+            imageUrl = imageResult.imageDataUri;
         }
+      } else {
+        throw new Error("Nenhuma entrada para analisar.");
+      }
 
-        const productDoc = querySnapshot.docs[0];
-        const productData = productDoc.data();
+      if (!result || !result.productName) {
+        throw new Error('Produto não reconhecido. Forneça um nome ou imagem válidos.');
+      }
+      
+      const summaryResult = await summarizeEnvironmentalImpact({
+        productName: result.productName,
+        carbonFootprint: result.carbonFootprint,
+        waterFootprint: result.waterFootprint,
+        sustainabilityCategory: result.sustainabilityCategory,
+      });
 
-        const result: AnalyzeProductImageOutput = {
-          productName: productData.name,
-          carbonFootprint: productData.carbonFootprint,
-          waterFootprint: productData.waterFootprint,
-          environmentalImpactDescription: productData.impact, 
-          economyScore: productData.economyScore,
-          societyScore: productData.societyScore,
-          environmentScore: productData.environmentScore,
-          totalScore: productData.finalScore,
-          sustainabilityCategory: productData.impact,
-        };
-        
-        setAnalysisResult(result);
-        setView('results');
+      setAnalysisResult({ ...result, image: imageUrl, summary: summaryResult.summary });
+      setView('results');
 
-       } catch(e) {
-          console.error(e);
-          setError('Ocorreu um erro ao buscar o produto. Tente novamente.');
-          setView('error');
-       }
+    } catch (e: any) {
+      console.error(e);
+      setError(e.message || 'Ocorreu um erro na análise. Por favor, tente novamente mais tarde.');
+      setView('error');
     }
   };
 
@@ -152,7 +147,7 @@ export function AnalysisView() {
   }
 
   if (view === 'results' && analysisResult) {
-    return <ResultsView result={analysisResult} onReset={resetView} uploadedImage={file} />;
+    return <ResultsView result={analysisResult} onReset={resetView} />;
   }
   
   if (view === 'error') {
