@@ -65,6 +65,30 @@
       "description": "A wooden chair with a simple design.",
       "imageUrl": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b29kZW4lMjBjaGFpcnxlbnwwfHx8fDE3NjIwNDg5NzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "wooden chair"
+    },
+    {
+      "id": "product-straws",
+      "description": "Reusable stainless steel straws.",
+      "imageUrl": "https://images.unsplash.com/photo-1589733983274-5561a0f9bf4f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzk1NTB8MHwxfHNlYXJjaHwxNXx8cmV1c2FibGUlMjBzdHJhd3N8ZW58MHx8fHwxNzIyNDMxNzA3fDA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "reusable straws"
+    },
+    {
+      "id": "product-led-bulbs",
+      "description": "Energy efficient LED light bulbs.",
+      "imageUrl": "https://images.unsplash.com/photo-1623393962829-8f3813e38710?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzk1NTB8MHwxfHNlYXJjaHwyfHxsZWQlMjBsaWdodCUyMGJ1bGJ8ZW58MHx8fHwxNzIyNDMyMDIwfDA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "led bulb"
+    },
+    {
+      "id": "product-composter",
+      "description": "A home composting bin.",
+      "imageUrl": "https://images.unsplash.com/photo-1600859608569-3545b77c5b62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzk1NTB8MHwxfHNlYXJjaHw2fHxjb21wb3N0ZXJ8ZW58MHx8fHwxNzIyNDMyMjU4fDA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "composter"
+    },
+    {
+      "id": "product-shampoo-bar",
+      "description": "A solid shampoo bar with no plastic packaging.",
+      "imageUrl": "https://images.unsplash.com/photo-1629198725007-82a931c82276?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzk1NTB8MHwxfHNlYXJjaHwzfHxzaGFtcG9vJTIwYmFyfGVufDB8fHx8MTcyMjQzMjMyM3ww&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "shampoo bar"
     }
   ]
 }
