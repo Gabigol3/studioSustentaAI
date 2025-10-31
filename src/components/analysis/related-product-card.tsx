@@ -5,7 +5,8 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Leaf, Zap } from "lucide-react";
+import { Separator } from "../ui/separator";
 
 export function RelatedProductCard({ product }: { product: RecommendedProduct }) {
   const recommendationColor = product.recommendation === "muito" ? "bg-primary/20 text-primary-foreground" : "bg-secondary text-secondary-foreground";
@@ -20,7 +21,7 @@ export function RelatedProductCard({ product }: { product: RecommendedProduct })
   }
 
   return (
-    <Card className="flex flex-col overflow-hidden transition-all hover:shadow-lg">
+    <Card className="flex flex-col overflow-hidden transition-all hover:shadow-xl hover:-translate-y-1">
       <CardHeader className="p-0">
         <div className="relative aspect-[4/3] w-full">
             {product.image ? (
@@ -40,20 +41,38 @@ export function RelatedProductCard({ product }: { product: RecommendedProduct })
             {product.recommendation === "muito" ? "Recomenda muito" : "Recomenda"}
           </Badge>
         </div>
-        <div className="p-4">
+        <div className="p-4 pb-0">
           <CardTitle className="text-lg">{product.name}</CardTitle>
           <div className="flex items-center justify-between mt-2">
             <p className="text-xl font-bold text-primary">{product.price}</p>
-            <Badge variant="outline" className={cn(sustainabilityBadgeVariant(product.sustainability.label))}>
+            <Badge variant="outline" className={cn("text-xs",sustainabilityBadgeVariant(product.sustainability.label))}>
               {product.sustainability.icon} {product.sustainability.label}
             </Badge>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="flex-grow p-4 pt-0">
+      <CardContent className="flex-grow p-4 space-y-4">
         <p className="text-sm text-muted-foreground">{product.summary}</p>
+        
+        {(product.electricalFootprint || product.usesWood) && <Separator />}
+
+        <div className="space-y-2 text-sm">
+            {product.electricalFootprint && (
+                <div className="flex items-center gap-2 text-muted-foreground">
+                    <Zap className="w-4 h-4 text-yellow-500" />
+                    <span>Pegada Elétrica: <span className="font-bold text-foreground">{product.electricalFootprint} kWh</span></span>
+                </div>
+            )}
+            {product.usesWood && product.ecologicalFootprint && (
+                <div className="flex items-center gap-2 text-muted-foreground">
+                    <Leaf className="w-4 h-4 text-green-500" />
+                    <span>Pegada Ecológica (Madeira): <span className="font-bold text-foreground">{product.ecologicalFootprint}</span></span>
+                </div>
+            )}
+        </div>
+
       </CardContent>
-      <CardFooter className="p-4 pt-0">
+      <CardFooter className="p-4 pt-0 mt-auto">
         <Button asChild className="w-full">
           <Link href={product.storeUrl}>
             Ir para a loja <ArrowRight className="ml-2 h-4 w-4" />

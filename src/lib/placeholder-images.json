@@ -59,6 +59,12 @@
       "description": "Placeholder image of a map",
       "imageUrl": "https://images.unsplash.com/photo-1713862032419-95a24b005dbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYXAlMjBpbGx1c3RyYXRpb258ZW58MHx8fHwxNzYxODYzNjQzfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "map illustration"
+    },
+    {
+      "id": "product-chair",
+      "description": "A wooden chair with a simple design.",
+      "imageUrl": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b29kZW4lMjBjaGFpcnxlbnwwfHx8fDE3NjIwNDg5NzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wooden chair"
     }
   ]
 }

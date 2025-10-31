@@ -53,7 +53,7 @@ export const ODS_DATA: {
     { id: 13, title: "Ação Contra a Mudança Global do Clima", description: "Tomar medidas urgentes para combater a mudança climática e seus impactos.", icon: CloudSun },
     { id: 14, title: "Vida na Água", description: "Conservar e usar sustentavelmente os oceanos, os mares e os recursos marinhos para o desenvolvimento sustentável.", icon: Fish },
     { id: 15, title: "Vida Terrestre", description: "Proteger, recuperar e promover o uso sustentável dos ecossistemas terrestres.", icon: Mountain },
-    { id_16: 16, title: "Paz, Justiça e Instituições Eficazes", description: "Promover sociedades pacíficas e inclusivas para o desenvolvimento sustentável.", icon: Scale },
+    { id: 16, title: "Paz, Justiça e Instituições Eficazes", description: "Promover sociedades pacíficas e inclusivas para o desenvolvimento sustentável.", icon: Scale },
     { id: 17, title: "Povos Indígenas e Tribais", description: "Fortalecer os meios de implementação e revitalizar a parceria global para o desenvolvimento sustentável, com foco nos direitos e bem-estar dos povos indígenas.", imageId: "ods-indigenous", highlighted: true, icon: Globe },
 ];
 
@@ -76,34 +76,55 @@ export type RecommendedProduct = {
     icon: string;
   };
   image: ImagePlaceholder | undefined;
+  electricalFootprint?: number;
+  usesWood?: boolean;
+  ecologicalFootprint?: 'Baixa' | 'Média' | 'Alta';
 }
 
 export const RECOMMENDED_PRODUCTS: RecommendedProduct[] = [
     {
       name: "Garrafa Térmica Ecológica",
       price: "R$ 89,90",
-      summary: "Feita com 90% de aço inoxidável reciclado.",
+      summary: "Feita com 90% de aço inoxidável reciclado, reduzindo a necessidade de extração de novos materiais.",
       storeUrl: "#",
       recommendation: "muito",
       sustainability: { label: "Sustentável", icon: "🌿" },
-      image: PlaceHolderImages.find(p => p.id === "product-bottle")
+      image: PlaceHolderImages.find(p => p.id === "product-bottle"),
+      electricalFootprint: 5.2,
+      usesWood: false,
     },
     {
       name: "Camiseta de Algodão Orgânico",
       price: "R$ 129,90",
-      summary: "Produção com baixo consumo de água e sem pesticidas.",
+      summary: "Produção com baixo consumo de água e sem pesticidas, protegendo o solo e os trabalhadores.",
       storeUrl: "#",
       recommendation: "muito",
       sustainability: { label: "Sustentável", icon: "🌿" },
-      image: PlaceHolderImages.find(p => p.id === "product-shirt")
+      image: PlaceHolderImages.find(p => p.id === "product-shirt"),
+      electricalFootprint: 1.8,
+      usesWood: false,
     },
     {
       name: "Tênis de Material Reciclado",
       price: "R$ 249,90",
-      summary: "Solado de borracha reciclada e tecido de garrafas PET.",
+      summary: "Solado de borracha reciclada e tecido de garrafas PET, dando nova vida a resíduos plásticos.",
       storeUrl: "#",
       recommendation: "normal",
       sustainability: { label: "Equilibrado", icon: "⚖️" },
-      image: PlaceHolderImages.find(p => p.id === "product-shoes")
+      image: PlaceHolderImages.find(p => p.id === "product-shoes"),
+      electricalFootprint: 8.5,
+      usesWood: false,
     },
+    {
+        name: "Cadeira de Madeira Certificada",
+        price: "R$ 499,90",
+        summary: "Madeira de reflorestamento com selo FSC, garantindo manejo florestal responsável.",
+        storeUrl: "#",
+        recommendation: "muito",
+        sustainability: { label: "Sustentável", icon: "🌿" },
+        image: PlaceHolderImages.find(p => p.id === "product-chair"),
+        electricalFootprint: 3.1,
+        usesWood: true,
+        ecologicalFootprint: 'Baixa',
+      },
 ];
