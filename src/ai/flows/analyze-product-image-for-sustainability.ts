@@ -22,16 +22,16 @@ export type AnalyzeProductImageInput = z.infer<typeof AnalyzeProductImageInputSc
 
 const AnalyzeProductImageOutputSchema = z.object({
   productName: z.string().describe('O nome do produto.'),
-  carbonFootprint: z.number().describe('A pegada de carbono do produto em kg CO₂eq.'),
-  waterFootprint: z.number().describe('A pegada hídrica do produto em litros.'),
+  carbonFootprint: z.number().describe('A pegada de carbono do produto em kg CO₂eq, considerando produção, transporte e descarte.'),
+  waterFootprint: z.number().describe('A pegada hídrica do produto em litros, incluindo água usada na produção e cadeia de suprimentos.'),
   environmentalImpactDescription: z
     .string()
-    .describe('Uma descrição resumida do impacto ambiental do produto.'),
-  economyScore: z.number().describe('Uma pontuação que representa a sustentabilidade econômica do produto.'),
-  societyScore: z.number().describe('Uma pontuação que representa o impacto social do produto.'),
-  environmentScore: z.number().describe('Uma pontuação que representa o impacto ambiental do produto.'),
-  totalScore: z.number().describe('A pontuação total de sustentabilidade do produto (0-100).'),
-  sustainabilityCategory: z.string().describe('A categoria de sustentabilidade do produto (por exemplo, Sustentável, Regular, Alto Impacto).'),
+    .describe('Uma descrição detalhada e justificada do impacto ambiental, abordando materiais, processo de fabricação e ciclo de vida.'),
+  economyScore: z.number().describe('Uma pontuação de 0 a 100 para a sustentabilidade econômica (ex: durabilidade, reparabilidade, circularidade).'),
+  societyScore: z.number().describe('Uma pontuação de 0 a 100 para o impacto social (ex: condições de trabalho, comércio justo, impacto na comunidade).'),
+  environmentScore: z.number().describe('Uma pontuação de 0 a 100 para o impacto ambiental direto (ex: uso de recursos, poluição, biodiversidade).'),
+  totalScore: z.number().describe('A pontuação total de sustentabilidade do produto (0-100), calculada como uma média ponderada dos outros escores.'),
+  sustainabilityCategory: z.string().describe('A categoria de sustentabilidade baseada na pontuação total (Sustentável, Regular, Alto Impacto).'),
 });
 
 export type AnalyzeProductImageOutput = z.infer<typeof AnalyzeProductImageOutputSchema>;
@@ -44,25 +44,26 @@ const analyzeProductImagePrompt = ai.definePrompt({
   name: 'analyzeProductImagePrompt',
   input: {schema: AnalyzeProductImageInputSchema},
   output: {schema: AnalyzeProductImageOutputSchema},
-  prompt: `Você é um assistente de IA projetado para analisar o impacto ambiental de produtos com base em imagens. Forneça todas as respostas em português.
+  prompt: `Você é um especialista em sustentabilidade e análise de ciclo de vida de produtos. Sua tarefa é analisar a imagem de um produto e fornecer uma avaliação detalhada de seu impacto socioambiental. Forneça todas as respostas em português.
 
-  Analise a imagem do produto fornecida e forneça as seguintes informações:
+  Analise a imagem do produto e, com base em seu conhecimento sobre materiais, processos de fabricação e marcas, estime as seguintes métricas:
 
-  - productName: O nome do produto na imagem.
-  - carbonFootprint: A pegada de carbono estimada do produto (em kg CO₂eq).
-  - waterFootprint: A pegada hídrica estimada do produto (em litros).
-  - environmentalImpactDescription: Uma breve descrição do impacto ambiental do produto.
-  - economyScore: Uma pontuação (0-100) representando a sustentabilidade econômica do produto.
-  - societyScore: Uma pontuação (0-100) representando o impacto social do produto.
-  - environmentScore: Uma pontuação (0-100) representando os danos ecológicos diretos, como poluição e resíduos.
-  - totalScore: Uma pontuação (0-100) representando a sustentabilidade total do produto.
-  - sustainabilityCategory: Uma categoria com base no totalScore. Se a pontuação for:
-    - 70-100: Sustentável
-    - 40-69: Regular
-    - 0-39: Alto Impacto
+  - 'productName': Identifique o nome do produto.
+  - 'carbonFootprint': Estime a pegada de carbono total (em kg CO₂eq), considerando a extração de matéria-prima, produção, transporte e fim de vida.
+  - 'waterFootprint': Estime a pegada hídrica (em litros), incluindo o consumo de água azul, verde e cinza.
+  - 'environmentalImpactDescription': Forneça uma análise qualitativa detalhada. Justifique suas estimativas, discuta os materiais (são recicláveis, biodegradáveis, de fonte renovável?), o processo de produção (consome muita energia?) e o ciclo de vida esperado (é um item de uso único? durável?).
+  - 'economyScore': Atribua uma pontuação de 0 a 100 para a sustentabilidade econômica. Considere fatores como durabilidade, possibilidade de reparo, modelo de negócio (venda, aluguel, serviço) e se incentiva uma economia circular.
+  - 'societyScore': Atribua uma pontuação de 0 a 100 para o impacto social. Considere o respeito aos direitos humanos na cadeia de produção, práticas de comércio justo e o impacto do produto na saúde e bem-estar das comunidades.
+  - 'environmentScore': Atribua uma pontuação de 0 a 100 para o impacto ambiental. Considere o uso de recursos naturais, a poluição gerada (ar, água, solo), a toxicidade dos materiais e o impacto na biodiversidade.
+  - 'totalScore': Calcule uma pontuação geral de sustentabilidade (0-100). Use uma média ponderada: 40% para 'environmentScore', 30% para 'societyScore' e 30% para 'economyScore'.
+  - 'sustainabilityCategory': Classifique o produto com base na 'totalScore':
+    - 70-100: "Sustentável"
+    - 40-69: "Regular"
+    - 0-39: "Alto Impacto"
 
-  Aqui está a imagem do produto: {{media url=productDataUri}}
-  Por favor, analise o produto mostrado na imagem e forneça as informações solicitadas em português.
+  Imagem do produto para análise: {{media url=productDataUri}}
+  
+  Seja rigoroso e baseie sua análise em dados e princípios de sustentabilidade conhecidos. Forneça a resposta no formato JSON solicitado.
   `,
 });
 
