@@ -48,9 +48,9 @@ const analyzeProductTextPrompt = ai.definePrompt({
   Analise o nome do produto e, com base em seu conhecimento sobre categorias de produtos, materiais e processos de fabricação, estime as seguintes métricas:
 
   - 'productName': O nome do produto fornecido.
-  - 'carbonFootprint': Estime a pegada de carbono total (em kg CO₂eq), considerando a extração de matéria-prima, produção, transporte e fim de vida.
-  - 'waterFootprint': Estime a pegada hídrica (em litros), incluindo o consumo de água azul, verde e cinza.
-  - 'environmentalImpactDescription': Forneça uma análise qualitativa detalhada. Justifique suas estimativas, discuta os materiais prováveis (são recicláveis, biodegradáveis?), o processo de produção típico e o ciclo de vida esperado.
+  - 'carbonFootprint': Estime a pegada de carbono total (em kg CO₂eq). Considere a extração de matéria-prima, a pegada elétrica (consumo de energia) na produção, o transporte e o fim de vida.
+  - 'waterFootprint': Estime a pegada hídrica (em litros). Inclua o consumo de água azul, verde e cinza. Dê contexto quando relevante (ex: alta pegada hídrica para irrigação de pomares em produtos agrícolas).
+  - 'environmentalImpactDescription': Forneça uma análise qualitativa detalhada. Justifique suas estimativas. Discuta os materiais prováveis (são recicláveis, biodegradáveis, de fonte renovável?), o processo de produção típico (consome muita energia?) e o ciclo de vida esperado.
   - 'economyScore': Atribua uma pontuação de 0 a 100 para a sustentabilidade econômica. Considere fatores como durabilidade, possibilidade de reparo e circularidade.
   - 'societyScore': Atribua uma pontuação de 0 a 100 para o impacto social. Considere o respeito aos direitos humanos na cadeia de produção e práticas de comércio justo.
   - 'environmentScore': Atribua uma pontuação de 0 a 100 para o impacto ambiental. Considere o uso de recursos, poluição e impacto na biodiversidade.

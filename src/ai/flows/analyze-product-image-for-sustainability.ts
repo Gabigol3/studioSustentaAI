@@ -52,9 +52,9 @@ const analyzeProductImagePrompt = ai.definePrompt({
   Analise a imagem do produto e, com base em seu conhecimento sobre materiais, processos de fabricação e marcas, estime as seguintes métricas:
 
   - 'productName': Identifique o nome do produto.
-  - 'carbonFootprint': Estime a pegada de carbono total (em kg CO₂eq), considerando a extração de matéria-prima, produção, transporte e fim de vida.
-  - 'waterFootprint': Estime a pegada hídrica (em litros), incluindo o consumo de água azul, verde e cinza.
-  - 'environmentalImpactDescription': Forneça uma análise qualitativa detalhada. Justifique suas estimativas, discuta os materiais (são recicláveis, biodegradáveis, de fonte renovável?), o processo de produção (consome muita energia?) e o ciclo de vida esperado (é um item de uso único? durável?).
+  - 'carbonFootprint': Estime a pegada de carbono total (em kg CO₂eq). Considere a extração de matéria-prima, a pegada elétrica (consumo de energia) na produção, o transporte e o fim de vida.
+  - 'waterFootprint': Estime a pegada hídrica (em litros). Inclua o consumo de água azul, verde e cinza. Dê contexto quando relevante (ex: alta pegada hídrica para irrigação de pomares em produtos agrícolas).
+  - 'environmentalImpactDescription': Forneça uma análise qualitativa detalhada. Justifique suas estimativas. Discuta os materiais (são de fonte renovável, recicláveis, biodegradáveis?), o processo de produção (consome muita energia? gera poluição?) e o ciclo de vida esperado (é durável, de uso único, permite reparo?).
   - 'economyScore': Atribua uma pontuação de 0 a 100 para a sustentabilidade econômica. Considere fatores como durabilidade, possibilidade de reparo, modelo de negócio (venda, aluguel, serviço) e se incentiva uma economia circular.
   - 'societyScore': Atribua uma pontuação de 0 a 100 para o impacto social. Considere o respeito aos direitos humanos na cadeia de produção, práticas de comércio justo e o impacto do produto na saúde e bem-estar das comunidades.
   - 'environmentScore': Atribua uma pontuação de 0 a 100 para o impacto ambiental. Considere o uso de recursos naturais, a poluição gerada (ar, água, solo), a toxicidade dos materiais e o impacto na biodiversidade.
