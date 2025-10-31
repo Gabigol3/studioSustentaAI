@@ -52,12 +52,12 @@ const analyzeProductImagePrompt = ai.definePrompt({
   Analise a imagem do produto e, com base em seu conhecimento sobre materiais, processos de fabricação e marcas, estime as seguintes métricas:
 
   - 'productName': Identifique o nome do produto.
-  - 'carbonFootprint': Estime a pegada de carbono total (em kg CO₂eq). Considere a extração de matéria-prima, a pegada elétrica (consumo de energia) na produção, o transporte e o fim de vida.
-  - 'waterFootprint': Estime a pegada hídrica (em litros). Inclua o consumo de água azul, verde e cinza. Dê contexto quando relevante (ex: alta pegada hídrica para irrigação de pomares em produtos agrícolas).
-  - 'environmentalImpactDescription': Forneça uma análise qualitativa detalhada. Justifique suas estimativas. Discuta os materiais (são de fonte renovável, recicláveis, biodegradáveis?), o processo de produção (consome muita energia? gera poluição?) e o ciclo de vida esperado (é durável, de uso único, permite reparo?).
-  - 'economyScore': Atribua uma pontuação de 0 a 100 para a sustentabilidade econômica. Considere fatores como durabilidade, possibilidade de reparo, modelo de negócio (venda, aluguel, serviço) e se incentiva uma economia circular.
-  - 'societyScore': Atribua uma pontuação de 0 a 100 para o impacto social. Considere o respeito aos direitos humanos na cadeia de produção, práticas de comércio justo e o impacto do produto na saúde e bem-estar das comunidades.
-  - 'environmentScore': Atribua uma pontuação de 0 a 100 para o impacto ambiental. Considere o uso de recursos naturais, a poluição gerada (ar, água, solo), a toxicidade dos materiais e o impacto na biodiversidade.
+  - 'carbonFootprint': Estime a pegada de carbono total (em kg CO₂eq). Considere a extração de matéria-prima, a pegada elétrica (consumo de energia) na produção, o transporte refrigerado, a embalagem e o fim de vida (decomposição em aterro pode gerar metano).
+  - 'waterFootprint': Estime a pegada hídrica (em litros). Inclua o consumo de água azul, verde e cinza. Dê contexto quando relevante. Exemplo: para uma maçã, a maior parte da pegada hídrica virá da irrigação do pomar.
+  - 'environmentalImpactDescription': Forneça uma análise qualitativa detalhada. Justifique suas estimativas. Discuta os materiais (são de fonte renovável, recicláveis, biodegradáveis?). Fale sobre o processo de produção: consome muita energia? Gera poluição (ex: uso de agrotóxicos na agricultura)? E o ciclo de vida: é um produto durável, de uso único? Como o descarte impacta o ambiente? Para produtos agrícolas, considere o impacto do uso da terra e da monocultura na biodiversidade.
+  - 'economyScore': Atribua uma pontuação de 0 a 100 para a sustentabilidade econômica. Considere fatores como durabilidade, possibilidade de reparo, modelo de negócio e se incentiva uma economia circular.
+  - 'societyScore': Atribua uma pontuação de 0 a 100 para o impacto social. Considere o respeito aos direitos humanos na cadeia de produção, práticas de comércio justo e o impacto do produto na saúde das comunidades.
+  - 'environmentScore': Atribua uma pontuação de 0 a 100 para o impacto ambiental. Considere o uso de recursos (água, terra), a poluição gerada, o uso de agrotóxicos, a toxicidade dos materiais e o impacto na biodiversidade. A pontuação deve refletir a análise feita na 'environmentalImpactDescription'.
   - 'totalScore': Calcule uma pontuação geral de sustentabilidade (0-100). Use uma média ponderada: 40% para 'environmentScore', 30% para 'societyScore' e 30% para 'economyScore'.
   - 'sustainabilityCategory': Classifique o produto com base na 'totalScore':
     - 70-100: "Sustentável"

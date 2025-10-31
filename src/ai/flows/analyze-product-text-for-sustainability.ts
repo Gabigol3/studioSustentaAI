@@ -48,12 +48,12 @@ const analyzeProductTextPrompt = ai.definePrompt({
   Analise o nome do produto e, com base em seu conhecimento sobre categorias de produtos, materiais e processos de fabricação, estime as seguintes métricas:
 
   - 'productName': O nome do produto fornecido.
-  - 'carbonFootprint': Estime a pegada de carbono total (em kg CO₂eq). Considere a extração de matéria-prima, a pegada elétrica (consumo de energia) na produção, o transporte e o fim de vida.
-  - 'waterFootprint': Estime a pegada hídrica (em litros). Inclua o consumo de água azul, verde e cinza. Dê contexto quando relevante (ex: alta pegada hídrica para irrigação de pomares em produtos agrícolas).
-  - 'environmentalImpactDescription': Forneça uma análise qualitativa detalhada. Justifique suas estimativas. Discuta os materiais prováveis (são recicláveis, biodegradáveis, de fonte renovável?), o processo de produção típico (consome muita energia?) e o ciclo de vida esperado.
-  - 'economyScore': Atribua uma pontuação de 0 a 100 para a sustentabilidade econômica. Considere fatores como durabilidade, possibilidade de reparo e circularidade.
-  - 'societyScore': Atribua uma pontuação de 0 a 100 para o impacto social. Considere o respeito aos direitos humanos na cadeia de produção e práticas de comércio justo.
-  - 'environmentScore': Atribua uma pontuação de 0 a 100 para o impacto ambiental. Considere o uso de recursos, poluição e impacto na biodiversidade.
+  - 'carbonFootprint': Estime a pegada de carbono total (em kg CO₂eq). Considere a extração de matéria-prima, a pegada elétrica na produção, o transporte refrigerado e o fim de vida.
+  - 'waterFootprint': Estime a pegada hídrica (em litros). Inclua o consumo de água azul, verde e cinza. Dê contexto quando relevante. Exemplo: para uma maçã, a maior parte da pegada hídrica virá da irrigação.
+  - 'environmentalImpactDescription': Forneça uma análise qualitativa detalhada. Justifique suas estimativas. Discuta os materiais prováveis (são recicláveis, de fonte renovável?), o processo de produção típico (consome muita energia? usa agrotóxicos?) e o ciclo de vida esperado. Para produtos agrícolas, considere o impacto do uso da terra e da monocultura na biodiversidade.
+  - 'economyScore': Atribua uma pontuação de 0 a 100 para a sustentabilidade econômica. Considere durabilidade, reparabilidade e circularidade.
+  - 'societyScore': Atribua uma pontuação de 0 a 100 para o impacto social. Considere condições de trabalho na cadeia de produção e práticas de comércio justo.
+  - 'environmentScore': Atribua uma pontuação de 0 a 100 para o impacto ambiental. Considere uso de recursos, poluição (agrotóxicos), e impacto na biodiversidade, conforme detalhado na 'environmentalImpactDescription'.
   - 'totalScore': Calcule uma pontuação geral de sustentabilidade (0-100). Use uma média ponderada: 40% para 'environmentScore', 30% para 'societyScore' e 30% para 'economyScore'.
   - 'sustainabilityCategory': Classifique o produto com base na 'totalScore':
     - 70-100: "Sustentável"
