@@ -1,3 +1,58 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "team-member-1",
+      "description": "Portrait of Alice Pereira",
+      "imageUrl": "https://images.unsplash.com/photo-1614283233556-f35b0c801ef1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MTkwOTQyNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "team-member-2",
+      "description": "Portrait of Bruno Costa",
+      "imageUrl": "https://images.unsplash.com/photo-1636377985931-898218afd306?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjE4ODE5NTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "team-member-3",
+      "description": "Portrait of Carla Dias",
+      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d29tYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjE5MDk0MjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "team-member-4",
+      "description": "Portrait of Daniel Martins",
+      "imageUrl": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjE4ODE5NTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "product-bottle",
+      "description": "Eco-friendly thermal bottle",
+      "imageUrl": "https://images.unsplash.com/photo-1605608800690-9e496dfdac1c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3YXRlciUyMGJvdHRsZXxlbnwwfHx8fDE3NjE5MTI4MzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "water bottle"
+    },
+    {
+      "id": "product-shirt",
+      "description": "Organic cotton t-shirt",
+      "imageUrl": "https://images.unsplash.com/photo-1759572095317-3a96f9a98e2b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx0LXNoaXJ0fGVufDB8fHx8MTc2MTg3NjEwMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "t-shirt"
+    },
+    {
+      "id": "product-shoes",
+      "description": "Recycled material sneakers",
+      "imageUrl": "https://images.unsplash.com/photo-1491553895911-0055eca6402d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzaG9lc3xlbnwwfHx8fDE3NjE4ODAxMjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "shoes"
+    },
+    {
+      "id": "ods-indigenous",
+      "description": "Symbolic image for indigenous people's ODS",
+      "imageUrl": "https://images.unsplash.com/photo-1587527824434-8b9fa990e228?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxpbmRpZ2Vub3VzJTIwcGVyc29ufGVufDB8fHx8MTc2MTkzMDUxOHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "indigenous person"
+    },
+    {
+      "id": "map-placeholder",
+      "description": "Placeholder image of a map",
+      "imageUrl": "https://images.unsplash.com/photo-1713862032419-95a24b005dbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYXAlMjBpbGx1c3RyYXRpb258ZW58MHx8fHwxNzYxODYzNjQzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "map illustration"
+    }
+  ]
 }
