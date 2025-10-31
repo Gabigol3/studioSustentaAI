@@ -1,0 +1,93 @@
+/**
+ * @fileoverview Firestore Security Rules for SustentaAI.
+ *
+ * Core Philosophy: This ruleset provides open read access to all data, assuming the data is inherently public. Write access is explicitly denied, as there's no authentication mechanism to properly restrict write operations in the current setup.
+ *
+ * Data Structure:
+ * - /products/{productId}: Product information and environmental impact data.
+ * - /sdgs/{sdgId}: Sustainable Development Goal information.
+ * - /green_areas/{greenAreaId}: Green area (parks, reserves) information.
+ * - /developers/{developerId}: Developer information.
+ *
+ * Key Security Decisions:
+ * - Public Read Access: All `get` and `list` operations are allowed for all collections, as the data is intended to be publicly accessible.
+ * - No Write Access: All `create`, `update`, and `delete` operations are explicitly denied due to the lack of user authentication and authorization mechanisms.
+ * - No denormalization or custom authorization logic is implemented, as the data is treated as read-only for now.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Allows anyone to read product information. Write operations are denied.
+     * @path /products/{productId}
+     * @allow (get) Any user can retrieve a product.
+     * @allow (list) Any user can list products.
+     * @deny (create) No one can create a product.
+     * @deny (update) No one can update a product.
+     * @deny (delete) No one can delete a product.
+     * @principle Allows public read access for product information, but restricts write access.
+     */
+    match /products/{productId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Allows anyone to read SDG information. Write operations are denied.
+     * @path /sdgs/{sdgId}
+     * @allow (get) Any user can retrieve an SDG.
+     * @allow (list) Any user can list SDGs.
+     * @deny (create) No one can create an SDG.
+     * @deny (update) No one can update an SDG.
+     * @deny (delete) No one can delete an SDG.
+     * @principle Allows public read access for SDG information, but restricts write access.
+     */
+    match /sdgs/{sdgId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Allows anyone to read green area information. Write operations are denied.
+     * @path /green_areas/{greenAreaId}
+     * @allow (get) Any user can retrieve a green area.
+     * @allow (list) Any user can list green areas.
+     * @deny (create) No one can create a green area.
+     * @deny (update) No one can update a green area.
+     * @deny (delete) No one can delete a green area.
+     * @principle Allows public read access for green area information, but restricts write access.
+     */
+    match /green_areas/{greenAreaId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Allows anyone to read developer information. Write operations are denied.
+     * @path /developers/{developerId}
+     * @allow (get) Any user can retrieve a developer.
+     * @allow (list) Any user can list developers.
+     * @deny (create) No one can create a developer.
+     * @deny (update) No one can update a developer.
+     * @deny (delete) No one can delete a developer.
+     * @principle Allows public read access for developer information, but restricts write access.
+     */
+    match /developers/{developerId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}

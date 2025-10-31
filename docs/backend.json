@@ -1,0 +1,268 @@
+{
+  "entities": {
+    "Product": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Product",
+      "type": "object",
+      "description": "Represents a product and its environmental impact data.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the product."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the product."
+        },
+        "category": {
+          "type": "string",
+          "description": "Category the product belongs to."
+        },
+        "carbonFootprint": {
+          "type": "number",
+          "description": "Carbon footprint of the product in kg CO₂eq."
+        },
+        "waterFootprint": {
+          "type": "number",
+          "description": "Water footprint of the product in liters."
+        },
+        "impact": {
+          "type": "string",
+          "description": "Overall environmental impact assessment (e.g., low, medium, high)."
+        },
+        "economyScore": {
+          "type": "number",
+          "description": "Score representing the economic dimension of sustainability."
+        },
+        "societyScore": {
+          "type": "number",
+          "description": "Score representing the societal dimension of sustainability."
+        },
+        "environmentScore": {
+          "type": "number",
+          "description": "Score representing the environmental dimension of sustainability."
+        },
+        "finalScore": {
+          "type": "number",
+          "description": "Overall sustainability score of the product (0-100)."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the product image.",
+          "format": "uri"
+        },
+        "storeUrl": {
+          "type": "string",
+          "description": "URL of the online store where the product can be purchased.",
+          "format": "uri"
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of the product."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "category",
+        "carbonFootprint",
+        "waterFootprint",
+        "impact",
+        "economyScore",
+        "societyScore",
+        "environmentScore",
+        "finalScore",
+        "imageUrl",
+        "storeUrl",
+        "price"
+      ]
+    },
+    "SDG": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "SDG",
+      "type": "object",
+      "description": "Represents a Sustainable Development Goal.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the SDG."
+        },
+        "number": {
+          "type": "number",
+          "description": "The SDG number (1-17)."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the SDG."
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief description of the SDG."
+        },
+        "iconUrl": {
+          "type": "string",
+          "description": "URL of the SDG icon.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "number",
+        "title",
+        "description",
+        "iconUrl"
+      ]
+    },
+    "GreenArea": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "GreenArea",
+      "type": "object",
+      "description": "Represents a green area (park, reserve, etc.).",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the green area."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the green area."
+        },
+        "latitude": {
+          "type": "number",
+          "description": "Latitude coordinate of the green area."
+        },
+        "longitude": {
+          "type": "number",
+          "description": "Longitude coordinate of the green area."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the green area."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "latitude",
+        "longitude",
+        "description"
+      ]
+    },
+    "Developer": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Developer",
+      "type": "object",
+      "description": "Represents a developer of the SustentaAI project.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the developer."
+        },
+        "fullName": {
+          "type": "string",
+          "description": "Full name of the developer."
+        },
+        "course": {
+          "type": "string",
+          "description": "Course of study for the developer."
+        },
+        "year": {
+          "type": "number",
+          "description": "Year of study for the developer."
+        },
+        "role": {
+          "type": "string",
+          "description": "Role of the developer in the project (e.g., Front-End Developer)."
+        },
+        "photoUrl": {
+          "type": "string",
+          "description": "URL of the developer's photo.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "fullName",
+        "course",
+        "year",
+        "role",
+        "photoUrl"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/products/{productId}",
+        "definition": {
+          "entityName": "Product",
+          "schema": {
+            "$ref": "#/backend/entities/Product"
+          },
+          "description": "Stores product information, including environmental impact data (carbon footprint, water footprint, etc.). Supports product analysis and recommendation features.",
+          "params": [
+            {
+              "name": "productId",
+              "description": "Unique identifier for the product."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/sdgs/{sdgId}",
+        "definition": {
+          "entityName": "SDG",
+          "schema": {
+            "$ref": "#/backend/entities/SDG"
+          },
+          "description": "Stores information about Sustainable Development Goals for the SDG education feature.",
+          "params": [
+            {
+              "name": "sdgId",
+              "description": "Unique identifier for the SDG."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/green_areas/{greenAreaId}",
+        "definition": {
+          "entityName": "GreenArea",
+          "schema": {
+            "$ref": "#/backend/entities/GreenArea"
+          },
+          "description": "Stores information about green areas (parks, reserves) for the green map integration feature.",
+          "params": [
+            {
+              "name": "greenAreaId",
+              "description": "Unique identifier for the green area."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/developers/{developerId}",
+        "definition": {
+          "entityName": "Developer",
+          "schema": {
+            "$ref": "#/backend/entities/Developer"
+          },
+          "description": "Stores information about the developers of SustentaAI.",
+          "params": [
+            {
+              "name": "developerId",
+              "description": "Unique identifier for the developer."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to support the SustentaAI application's features, focusing on product analysis, SDG education, and green area discovery. The core principle is Authorization Independence, achieved through denormalization where necessary. The structure is segregated based on data type to ensure homogeneous security postures.\n\n*   `/products`: Stores product information including environmental impact data. No specific authorization is required for reading, so no denormalization is necessary. This collection supports listing products and retrieving individual product details, which is crucial for the 'Sustainable Alternatives' feature and database search.\n*   `/sdgs`: Stores information about Sustainable Development Goals. This data is generally public and does not require specific authorization, thus no denormalization is needed. This supports the 'SDG Education' feature.\n*   `/green_areas`: Stores information about green areas. This data is also generally public and doesn't need authorization. This supports the 'Green Map Integration' feature.\n*   `/developers`: Stores information about the developers. This data is also public.\n\nThis design ensures Authorization Independence (no `get()` calls in rules), supports required QAPs (secure `list` operations via structural segregation), and provides clarity for debugging. It also accounts for the application's core features like product analysis, alternative recommendations, SDG education, and the green map integration."
+  }
+}
