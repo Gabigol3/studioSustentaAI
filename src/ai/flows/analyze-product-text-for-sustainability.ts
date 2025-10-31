@@ -22,6 +22,9 @@ const AnalyzeProductTextOutputSchema = z.object({
     productName: z.string().describe('O nome do produto.'),
     carbonFootprint: z.number().describe('A pegada de carbono do produto em kg CO₂eq, considerando produção, transporte e descarte.'),
     waterFootprint: z.number().describe('A pegada hídrica do produto em litros, incluindo água usada na produção e cadeia de suprimentos.'),
+    energeticFootprint: z.number().describe('A pegada energética total em kWh, somando a energia de todas as fases do ciclo de vida.'),
+    ecologicalFootprint: z.number().describe('A pegada ecológica em hectares globais (gha), representando a área biologicamente produtiva necessária.'),
+    landUse: z.number().describe('A área de terra ocupada para a produção em metros quadrados (m²).'),
     environmentalImpactDescription: z
       .string()
       .describe('Uma descrição detalhada e justificada do impacto ambiental, abordando materiais, processo de fabricação e ciclo de vida.'),
@@ -51,33 +54,35 @@ Se for um produto, siga a metodologia ACV ("do berço ao túmulo"):
 
 1.  **Extração de Matérias-Primas:**
     *   Identifique os materiais prováveis (ex: algodão, plástico PET, metais).
-    *   Estime a pegada de carbono e hídrica da extração/cultivo. (Ex: mineração de alumínio consome muita energia; cultivo de algodão consome muita água).
+    *   Estime a pegada de carbono (CO₂eq), hídrica (L), energética (kWh) e de uso da terra (m²) da extração/cultivo. (Ex: mineração de alumínio consome muita energia; cultivo de algodão consome muita água e terra).
 
 2.  **Processamento e Manufatura:**
-    *   Considere a energia gasta para transformar a matéria-prima no produto final (ex: tecelagem, moldagem de plástico, montagem de eletrônicos).
-    *   Inclua o consumo de água em processos como tingimento de tecidos.
+    *   Considere a energia (kWh) gasta para transformar a matéria-prima no produto final.
+    *   Inclua o consumo de água e as emissões de CO₂ em processos como tingimento, moldagem, etc.
 
 3.  **Transporte e Distribuição:**
-    *   Estime a origem provável dos materiais e do produto final (ex: China, Brasil).
-    *   Calcule as emissões do transporte (considere o modal: navio é mais eficiente que avião).
+    *   Estime a origem provável e calcule as emissões do transporte (navio, caminhão, avião) e a energia consumida.
 
-4.  **Fase de Uso (se aplicável):**
-    *   Para eletrônicos, calcule o consumo de energia durante a vida útil. Fórmula: Potência (kW) × Horas de uso × Vida útil (anos) × Fator de emissão da matriz energética.
-    *   Para produtos como roupas, considere a água e energia gastas em lavagens.
+4.  **Fase de Uso:**
+    *   Para eletrônicos, calcule o consumo de energia (kWh) durante a vida útil. Fórmula: Potência (kW) × Horas de uso × Vida útil (anos).
+    *   Para roupas, considere água e energia gastas em lavagens.
 
 5.  **Fim de Vida:**
-    *   Analise o impacto do descarte. A reciclagem pode gerar um "crédito" de carbono (negativo). O aterro gera emissões de metano. Incineração gera CO₂.
+    *   Analise o impacto do descarte. Reciclagem pode gerar "crédito" de carbono/energia. Aterro gera emissões de metano.
 
 **Campos a serem preenchidos:**
 
 -   **isProduct**: 'true' se for um produto.
 -   **productName**: O nome do produto fornecido.
--   **carbonFootprint**: A soma das emissões de CO₂eq de TODAS as fases da ACV.
--   **waterFootprint**: A soma do consumo de água em TODAS as fases ("água virtual").
+-   **carbonFootprint**: A soma das emissões de CO₂eq de TODAS as fases da ACV (em kg CO₂eq).
+-   **waterFootprint**: A soma do consumo de água em TODAS as fases (em litros).
+-   **energeticFootprint**: A soma do consumo de energia em TODAS as fases (em kWh).
+-   **ecologicalFootprint**: Estimativa da área produtiva necessária para sustentar o ciclo de vida do produto (em gha - hectares globais). Considere terra para cultivo/extração, infraestrutura e absorção de CO₂.
+-   **landUse**: A área de terra diretamente ocupada para a produção (em m²).
 -   **environmentalImpactDescription**: Uma análise qualitativa detalhada, justificando as estimativas. Descreva os "hotspots" (as fases de maior impacto).
--   **economyScore** (0-100): Avalie a durabilidade, reparabilidade e circularidade do produto.
--   **societyScore** (0-100): Considere as condições de trabalho e práticas de comércio justo na cadeia produtiva.
--   **environmentScore** (0-100): Pontuação baseada no impacto ambiental consolidado (uso de recursos, poluição, etc.).
+-   **economyScore** (0-100): Avalie a durabilidade, reparabilidade e circularidade.
+-   **societyScore** (0-100): Considere as condições de trabalho e práticas de comércio justo.
+-   **environmentScore** (0-100): Pontuação baseada no impacto ambiental consolidado.
 -   **totalScore**: Média ponderada (40% environmentScore, 30% societyScore, 30% economyScore).
 -   **sustainabilityCategory**:
     - 70-100: "Sustentável"

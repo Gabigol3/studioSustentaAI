@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui
 import { Separator } from "../ui/separator";
 import { ScoreCircle } from "./score-circle";
 import { formatNumber } from "@/lib/utils";
-import { Droplets, Footprints, RotateCcw } from "lucide-react";
+import { Droplets, Footprints, RotateCcw, Zap, Globe, Mountain } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 import {
@@ -56,16 +56,26 @@ export function ResultsView({ result, onReset }: ResultsViewProps) {
                     </div>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                    <div className="grid grid-cols-2 gap-4 text-center">
-                        <div className="flex flex-col items-center gap-1 rounded-lg p-4 bg-secondary">
-                            <Footprints className="w-8 h-8 text-primary"/>
-                            <p className="text-sm text-muted-foreground">Pegada de Carbono</p>
-                            <p className="text-2xl font-bold">{formatNumber(result.carbonFootprint)} <span className="text-sm font-normal">kg CO₂eq</span></p>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                        <div className="flex flex-col items-center gap-1 rounded-lg p-2 bg-secondary">
+                            <Footprints className="w-7 h-7 text-primary"/>
+                            <p className="text-xs text-muted-foreground">Pegada de Carbono</p>
+                            <p className="text-lg font-bold">{formatNumber(result.carbonFootprint)} <span className="text-xs font-normal">kg CO₂eq</span></p>
                         </div>
-                        <div className="flex flex-col items-center gap-1 rounded-lg p-4 bg-secondary">
-                            <Droplets className="w-8 h-8 text-accent"/>
-                            <p className="text-sm text-muted-foreground">Pegada Hídrica</p>
-                            <p className="text-2xl font-bold">{formatNumber(result.waterFootprint)} <span className="text-sm font-normal">litros</span></p>
+                        <div className="flex flex-col items-center gap-1 rounded-lg p-2 bg-secondary">
+                            <Droplets className="w-7 h-7 text-accent"/>
+                            <p className="text-xs text-muted-foreground">Pegada Hídrica</p>
+                            <p className="text-lg font-bold">{formatNumber(result.waterFootprint)} <span className="text-xs font-normal">litros</span></p>
+                        </div>
+                        <div className="flex flex-col items-center gap-1 rounded-lg p-2 bg-secondary">
+                            <Zap className="w-7 h-7 text-yellow-500"/>
+                            <p className="text-xs text-muted-foreground">Pegada Energética</p>
+                            <p className="text-lg font-bold">{formatNumber(result.energeticFootprint)} <span className="text-xs font-normal">kWh</span></p>
+                        </div>
+                        <div className="flex flex-col items-center gap-1 rounded-lg p-2 bg-secondary">
+                            <Globe className="w-7 h-7 text-green-600"/>
+                            <p className="text-xs text-muted-foreground">Pegada Ecológica</p>
+                            <p className="text-lg font-bold">{formatNumber(result.ecologicalFootprint)} <span className="text-xs font-normal">gha</span></p>
                         </div>
                     </div>
 
@@ -73,7 +83,13 @@ export function ResultsView({ result, onReset }: ResultsViewProps) {
                         <AccordionItem value="item-1">
                             <AccordionTrigger>Análise Detalhada</AccordionTrigger>
                             <AccordionContent>
-                            {result.environmentalImpactDescription}
+                                {result.environmentalImpactDescription}
+                                {result.landUse > 0 && (
+                                    <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground rounded-lg bg-secondary p-3">
+                                        <Mountain className="w-5 h-5 text-green-600 shrink-0" />
+                                        <span>Este produto utilizou aproximadamente <span className="font-bold text-foreground">{formatNumber(result.landUse)} m²</span> de terra em seu ciclo de vida.</span>
+                                    </div>
+                                )}
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
