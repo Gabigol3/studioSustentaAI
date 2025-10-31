@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -60,23 +61,26 @@ export function MapView() {
       <APIProvider apiKey={apiKey}>
         <Map
           defaultCenter={position}
-          defaultZoom={10}
+          defaultZoom={11}
           gestureHandling={'greedy'}
-          disableDefaultUI={true}
-          mapId={'sustentaai-map'}
+          disableDefaultUI={false}
+          mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID}
+          style={{ width: '100%', height: '100%' }}
+          reuseMaps={true}
         >
-          {greenAreas?.map((area) => (
+          {greenAreas && greenAreas.length > 0 && greenAreas.map((area) => (
             <AdvancedMarker
               key={area.id}
               position={{ lat: area.latitude, lng: area.longitude }}
               onClick={() => setSelectedArea(area)}
             >
               <Pin
-                background={'hsl(var(--primary))'}
-                borderColor={'hsl(var(--primary-foreground))'}
-                glyphColor={'hsl(var(--primary-foreground))'}
+                background={'#10b981'}
+                borderColor={'#ffffff'}
+                glyphColor={'#ffffff'}
+                scale={1.2}
               >
-                  <MapPin/>
+                <MapPin className="w-4 h-4" />
               </Pin>
             </AdvancedMarker>
           ))}
@@ -88,11 +92,10 @@ export function MapView() {
                 lng: selectedArea.longitude,
               }}
               onCloseClick={() => setSelectedArea(null)}
-              minWidth={200}
             >
-              <div>
-                <h3 className="font-bold font-headline">{selectedArea.name}</h3>
-                <p className="text-sm text-muted-foreground">{selectedArea.description}</p>
+              <div className="p-2 max-w-xs">
+                <h3 className="font-bold text-base mb-1">{selectedArea.name}</h3>
+                <p className="text-sm text-gray-600">{selectedArea.description}</p>
               </div>
             </InfoWindow>
           )}
