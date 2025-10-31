@@ -14,7 +14,6 @@ import { useFirestore } from '@/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import Image from 'next/image';
 import { analyzeProductText } from '@/ai/flows/analyze-product-text-for-sustainability';
-import { generateProductImage } from '@/ai/flows/generate-product-image';
 import { summarizeEnvironmentalImpact } from '@/ai/flows/summarize-environmental-impact';
 
 type ViewState = 'form' | 'loading' | 'results' | 'error';
@@ -101,8 +100,8 @@ export function AnalysisView() {
             imageUrl = productData.imageUrl;
         } else {
             result = await analyzeProductText({ productName });
-            const imageResult = await generateProductImage({ productName: result.productName });
-            imageUrl = imageResult.imageDataUri;
+            // A geração de imagem foi removida para evitar o erro de faturamento da API.
+            imageUrl = undefined;
         }
       } else {
         throw new Error("Nenhuma entrada para analisar.");
