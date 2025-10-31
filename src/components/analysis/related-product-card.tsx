@@ -74,7 +74,7 @@ export function RelatedProductCard({ product }: { product: RecommendedProduct })
       </CardContent>
       <CardFooter className="p-4 pt-0 mt-auto">
         <Button asChild className="w-full">
-          <Link href={product.storeUrl}>
+          <Link href={product.storeUrl} target="_blank" rel="noopener noreferrer">
             Ir para a loja <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
