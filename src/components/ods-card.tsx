@@ -18,21 +18,24 @@ export function OdsCard({ ods }: { ods: Ods }) {
   return (
     <Card className={cn(
         "flex flex-col h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1",
-        ods.highlighted && "bg-primary/10 border-primary"
+        ods.highlighted && "bg-primary/10 border-primary shadow-lg"
     )}>
       <CardHeader>
         {odsImage ? (
-            <div className="relative aspect-video w-full mb-4">
+            <div className="relative aspect-video w-full mb-4 overflow-hidden rounded-md">
                 <Image
                     src={odsImage.imageUrl}
                     alt={ods.title}
                     fill
-                    className="object-cover rounded-md"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                     data-ai-hint={odsImage.imageHint}
                 />
             </div>
         ) : (
-            <div className="w-16 h-16 rounded-lg bg-secondary flex items-center justify-center mb-4">
+            <div className={cn(
+              "w-16 h-16 rounded-lg flex items-center justify-center mb-4",
+              ods.highlighted ? "bg-primary/20" : "bg-secondary"
+            )}>
                 <span className="text-2xl font-bold text-muted-foreground">{ods.icon}</span>
             </div>
         )}
