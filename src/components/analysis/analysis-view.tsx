@@ -91,6 +91,9 @@ export function AnalysisView() {
               productName: productData.name,
               carbonFootprint: productData.carbonFootprint,
               waterFootprint: productData.waterFootprint,
+              energeticFootprint: 0, // Placeholder, as it's not in the DB
+              ecologicalFootprint: 0, // Placeholder, as it's not in the DB
+              landUse: 0, // Placeholder, as it's not in the DB
               environmentalImpactDescription: productData.impact, 
               economyScore: productData.economyScore,
               societyScore: productData.societyScore,
@@ -122,7 +125,14 @@ export function AnalysisView() {
 
     } catch (e: any) {
       console.error(e);
-      setError(e.message || 'Ocorreu um erro na análise. Por favor, tente novamente mais tarde.');
+      if (e.message && (e.message.toLowerCase().includes('quota') || e.message.toLowerCase().includes('rate limit'))) {
+        setError('Limite diário de análises atingido. Por favor, tente novamente amanhã.');
+      } else if (e.message && e.message.includes('Produto não reconhecido')) {
+        setError(e.message);
+      }
+      else {
+        setError('Ocorreu um erro na análise. Por favor, tente novamente mais tarde.');
+      }
       setView('error');
     }
   };
