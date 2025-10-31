@@ -54,10 +54,10 @@ export function RelatedProductCard({ product }: { product: RecommendedProduct })
       <CardContent className="flex-grow p-4 space-y-4">
         <p className="text-sm text-muted-foreground">{product.summary}</p>
         
-        {(product.electricalFootprint || product.usesWood) && <Separator />}
+        {(typeof product.electricalFootprint === 'number' || product.usesWood) && <Separator />}
 
         <div className="space-y-2 text-sm">
-            {product.electricalFootprint && (
+            {typeof product.electricalFootprint === 'number' && (
                 <div className="flex items-center gap-2 text-muted-foreground">
                     <Zap className="w-4 h-4 text-yellow-500" />
                     <span>Pegada Elétrica: <span className="font-bold text-foreground">{product.electricalFootprint} kWh</span></span>
