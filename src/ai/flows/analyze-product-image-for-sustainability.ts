@@ -45,29 +45,52 @@ const analyzeProductImagePrompt = ai.definePrompt({
   name: 'analyzeProductImagePrompt',
   input: {schema: AnalyzeProductImageInputSchema},
   output: {schema: AnalyzeProductImageOutputSchema},
-  prompt: `Você é um especialista em sustentabilidade e análise de ciclo de vida de produtos. Sua primeira tarefa é determinar se a imagem fornecida contém um produto comercializável, incluindo alimentos (como uma maçã ou um pastel). No entanto, conceitos abstratos, receitas, gráficos, pessoas, animais ou paisagens não são considerados produtos. Se a imagem não for de um produto, defina 'isProduct' como 'false' e retorne valores padrão (string vazia, 0) para os outros campos.
+  prompt: `Você é um especialista em Análise de Ciclo de Vida (ACV) de produtos. Sua tarefa é analisar a imagem de um produto e estimar seu impacto socioambiental com base na metodologia ACV. Forneça todas as respostas em português.
 
-  Se a imagem for de um produto, defina 'isProduct' como 'true' e analise-a para fornecer uma avaliação detalhada de seu impacto socioambiental. Forneça todas as respostas em português.
+Primeiro, determine se a imagem contém um produto comercializável. Se não for, defina 'isProduct' como 'false' e retorne valores padrão.
 
-  Analise a imagem do produto e, com base em seu conhecimento sobre materiais, processos de fabricação e marcas, estime as seguintes métricas:
+Se for um produto, siga a metodologia ACV ("do berço ao túmulo"):
 
-  - 'productName': Identifique o nome do produto.
-  - 'carbonFootprint': Estime a pegada de carbono total (em kg CO₂eq). Considere a extração de matéria-prima, a pegada elétrica (consumo de energia) na produção, o transporte refrigerado, a embalagem e o fim de vida (decomposição em aterro pode gerar metano).
-  - 'waterFootprint': Estime a pegada hídrica (em litros). Inclua a "água virtual" usada em toda a cadeia de suprimentos. Dê contexto. Exemplo para produtos agrícolas: "A maior parte da pegada hídrica virá da irrigação do pomar." Exemplo para eletrônicos: "A pegada hídrica de eletrônicos é alta devido ao uso intensivo de água na fabricação de semicondutores e na mineração de metais."
-  - 'environmentalImpactDescription': Forneça uma análise qualitativa detalhada. Justifique suas estimativas. Discuta os materiais (resuma os materiais usados, são de fonte renovável, recicláveis, biodegradáveis?). Fale sobre o processo de produção: consome muita energia (pegada elétrica)? Gera poluição (ex: uso de agrotóxicos na agricultura)? E o ciclo de vida: é um produto durável, de uso único? Como o descarte impacta o ambiente? Se o produto contiver madeira, analise a pegada ecológica relacionada ao desmatamento e manejo florestal. Para produtos agrícolas, considere o impacto do uso da terra e da monocultura na biodiversidade.
-  - 'economyScore': Atribua uma pontuação de 0 a 100 para a sustentabilidade econômica. Considere fatores como durabilidade, possibilidade de reparo, modelo de negócio e se incentiva uma economia circular.
-  - 'societyScore': Atribua uma pontuação de 0 a 100 para o impacto social. Considere o respeito aos direitos humanos na cadeia de produção, práticas de comércio justo e o impacto do produto na saúde das comunidades.
-  - 'environmentScore': Atribua uma pontuação de 0 a 100 para o impacto ambiental. Considere o uso de recursos (água, terra), a poluição gerada, o uso de agrotóxicos, a toxicidade dos materiais e o impacto na biodiversidade. A pontuação deve refletir a análise feita na 'environmentalImpactDescription'.
-  - 'totalScore': Calcule uma pontuação geral de sustentabilidade (0-100). Use uma média ponderada: 40% para 'environmentScore', 30% para 'societyScore' e 30% para 'economyScore'.
-  - 'sustainabilityCategory': Classifique o produto com base na 'totalScore':
+**Metodologia de Análise de Ciclo de Vida (ACV):**
+
+1.  **Extração de Matérias-Primas:**
+    *   Identifique os materiais principais (ex: algodão, plástico PET, metais).
+    *   Estime a pegada de carbono e hídrica da extração/cultivo. (Ex: mineração de alumínio consome muita energia; cultivo de algodão consome muita água).
+
+2.  **Processamento e Manufatura:**
+    *   Considere a energia gasta para transformar a matéria-prima no produto final (ex: tecelagem, moldagem de plástico, montagem de eletrônicos).
+    *   Inclua o consumo de água em processos como tingimento de tecidos.
+
+3.  **Transporte e Distribuição:**
+    *   Estime a origem provável dos materiais e do produto final (ex: China, Brasil).
+    *   Calcule as emissões do transporte (considere o modal: navio é mais eficiente que avião).
+
+4.  **Fase de Uso (se aplicável):**
+    *   Para eletrônicos, calcule o consumo de energia durante a vida útil. Fórmula: Potência (kW) × Horas de uso × Vida útil (anos) × Fator de emissão da matriz energética.
+    *   Para produtos como roupas, considere a água e energia gastas em lavagens.
+
+5.  **Fim de Vida:**
+    *   Analise o impacto do descarte. A reciclagem pode gerar um "crédito" de carbono (negativo). O aterro gera emissões de metano. Incineração gera CO₂.
+
+**Campos a serem preenchidos:**
+
+-   **isProduct**: 'true' se for um produto.
+-   **productName**: Nome do produto identificado.
+-   **carbonFootprint**: A soma das emissões de CO₂eq de TODAS as fases da ACV.
+-   **waterFootprint**: A soma do consumo de água em TODAS as fases ("água virtual").
+-   **environmentalImpactDescription**: Uma análise qualitativa detalhada, justificando as estimativas. Descreva os "hotspots" (as fases de maior impacto).
+-   **economyScore** (0-100): Avalie a durabilidade, reparabilidade e circularidade do produto.
+-   **societyScore** (0-100): Considere as condições de trabalho e práticas de comércio justo na cadeia produtiva.
+-   **environmentScore** (0-100): Pontuação baseada no impacto ambiental consolidado (uso de recursos, poluição, etc.).
+-   **totalScore**: Média ponderada (40% environmentScore, 30% societyScore, 30% economyScore).
+-   **sustainabilityCategory**:
     - 70-100: "Sustentável"
     - 40-69: "Regular"
     - 0-39: "Alto Impacto"
 
-  Imagem do produto para análise: {{media url=productDataUri}}
-  
-  Seja rigoroso e baseie sua análise em dados e princípios de sustentabilidade conhecidos. Forneça a resposta no formato JSON solicitado.
-  `,
+Imagem do produto para análise: {{media url=productDataUri}}
+
+Seja rigoroso e baseie sua análise em dados e princípios de ACV conhecidos. Forneça a resposta no formato JSON solicitado.`,
 });
 
 const analyzeProductImageFlow = ai.defineFlow(
