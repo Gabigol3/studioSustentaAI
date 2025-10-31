@@ -13,6 +13,7 @@ import { AlertTriangle, RotateCcw, X } from 'lucide-react';
 import { useFirestore } from '@/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import Image from 'next/image';
+import { analyzeProductText } from '@/ai/flows/analyze-product-text-for-sustainability';
 
 type ViewState = 'form' | 'loading' | 'results' | 'error';
 
@@ -95,9 +96,16 @@ export function AnalysisView() {
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
-          setError(`Produto "${productName}" não encontrado em nossa base de dados.`);
-          setView('error');
-          return;
+            // If not in DB, use AI to analyze the text
+            const result = await analyzeProductText({ productName });
+            if (!result || !result.productName) {
+                setError(`Não foi possível analisar o produto "${productName}".`);
+                setView('error');
+            } else {
+                setAnalysisResult(result);
+                setView('results');
+            }
+            return;
         }
 
         const productDoc = querySnapshot.docs[0];
