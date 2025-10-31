@@ -43,12 +43,26 @@ export function FileUploader({ onFileSelect, disabled }: FileUploaderProps) {
       onFileSelect(file);
     }
   };
+
+  const handleCameraClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation(); // Evita que o clique se propague para o div pai
+    if (!disabled && cameraInputRef.current) {
+        cameraInputRef.current.click();
+    }
+  };
+
+  const handleGalleryClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    if (!disabled && fileInputRef.current) {
+        fileInputRef.current.click();
+    }
+  };
   
   return (
     <div className="flex flex-col items-center gap-4 w-full">
       <div
         className={cn(
-          "w-full rounded-lg border-2 border-dashed border-muted-foreground/30 p-8 text-center transition-colors duration-300",
+          "w-full rounded-lg border-2 border-dashed border-muted-foreground/30 p-8 text-center transition-colors duration-300 cursor-pointer",
           isDragging ? "bg-primary/10 border-primary" : "bg-card hover:border-primary/50",
           disabled && "opacity-50 cursor-not-allowed"
         )}
@@ -80,11 +94,11 @@ export function FileUploader({ onFileSelect, disabled }: FileUploaderProps) {
         />
       </div>
       <div className="flex flex-col sm:flex-row gap-2 w-full">
-          <Button variant="outline" className="w-full" onClick={() => !disabled && cameraInputRef.current?.click()} disabled={disabled}>
+          <Button variant="outline" className="w-full" onClick={handleCameraClick} disabled={disabled}>
               <Camera className="mr-2 h-4 w-4" />
               Tirar Foto
           </Button>
-          <Button variant="outline" className="w-full" onClick={() => !disabled && fileInputRef.current?.click()} disabled={disabled}>
+          <Button variant="outline" className="w-full" onClick={handleGalleryClick} disabled={disabled}>
               <ImageIcon className="mr-2 h-4 w-4" />
               Escolher da Galeria
           </Button>
