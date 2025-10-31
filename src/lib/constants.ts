@@ -29,10 +29,10 @@ export const ODS_DATA = [
 ];
 
 export const TEAM_MEMBERS = [
-    { name: "Alice Pereira", course: "Design UX", year: "3º Ano", role: "Designer UX/UI", imageId: "team-member-1" },
-    { name: "Bruno Costa", course: "Engenharia de Software", year: "4º Ano", role: "Desenvolvedor Front-End", imageId: "team-member-2" },
-    { name: "Carla Dias", course: "Ciência da Computação", year: "5º Ano", role: "Engenheira de IA", imageId: "team-member-3" },
-    { name: "Daniel Martins", course: "Engenharia de Software", year: "4º Ano", role: "Desenvolvedor Back-End", imageId: "team-member-4" },
+    { name: "Alice Pereira", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Designer UX/UI", imageId: "team-member-1" },
+    { name: "Bruno Costa", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor Front-End", imageId: "team-member-2" },
+    { name: "Carla Dias", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Engenheira de IA", imageId: "team-member-3" },
+    { name: "Daniel Martins", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor Back-End", imageId: "team-member-4" },
 ];
 
 export type RecommendedProduct = {
@@ -77,4 +77,3 @@ export const RECOMMENDED_PRODUCTS: RecommendedProduct[] = [
       image: PlaceHolderImages.find(p => p.id === "product-shoes")
     },
 ];
-
