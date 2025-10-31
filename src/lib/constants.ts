@@ -29,10 +29,11 @@ export const ODS_DATA = [
 ];
 
 export const TEAM_MEMBERS = [
-    { name: "Alice Pereira", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Designer UX/UI", imageId: "team-member-1" },
-    { name: "Bruno Costa", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor Front-End", imageId: "team-member-2" },
-    { name: "Carla Dias", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Engenheira de IA", imageId: "team-member-3" },
-    { name: "Daniel Martins", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor Back-End", imageId: "team-member-4" },
+    { name: "Gabriel Pedro Ramos", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor Principal", imageId: "team-member-1" },
+    { name: "Pedro Henrique Marcelino", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor Secundário", imageId: "team-member-2" },
+    { name: "Pedro Henrique de Lima Silveira", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Designer", imageId: "team-member-3" },
+    { name: "Vinícius Gabriel Landgraff de Carli", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Designer", imageId: "team-member-4" },
+    { name: "Rodrigo Fernandes de Oliveira", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Analista de Dados", imageId: "team-member-5" },
 ];
 
 export type RecommendedProduct = {

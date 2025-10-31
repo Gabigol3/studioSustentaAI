@@ -11,7 +11,7 @@ export default function AboutPage() {
               Conheça os estudantes apaixonados por tecnologia e sustentabilidade que estão construindo o SustentaAI.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-8 gap-y-12 max-w-7xl mx-auto">
           {TEAM_MEMBERS.map((member) => (
             <TeamMemberCard key={member.name} member={member} />
           ))}
