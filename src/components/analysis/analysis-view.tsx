@@ -53,7 +53,7 @@ export function AnalysisView() {
     if (!file && !productName) {
       toast({
         variant: "destructive",
-        title: "Nenhum produto fornecido",
+        title: "Nenhuma entrada fornecida",
         description: "Por favor, envie uma imagem ou digite o nome de um produto.",
       });
       return;
@@ -87,6 +87,7 @@ export function AnalysisView() {
         if (!querySnapshot.empty) {
             const productData = querySnapshot.docs[0].data();
             result = {
+              isProduct: true,
               productName: productData.name,
               carbonFootprint: productData.carbonFootprint,
               waterFootprint: productData.waterFootprint,
@@ -100,15 +101,13 @@ export function AnalysisView() {
             imageUrl = productData.imageUrl;
         } else {
             result = await analyzeProductText({ productName });
-            // A geração de imagem foi removida para evitar o erro de faturamento da API.
-            imageUrl = undefined;
         }
       } else {
         throw new Error("Nenhuma entrada para analisar.");
       }
 
-      if (!result || !result.productName) {
-        throw new Error('Produto não reconhecido. Forneça um nome ou imagem válidos.');
+      if (!result || !result.isProduct) {
+        throw new Error('Produto não reconhecido. Por favor, insira um produto válido ou envie a foto de um produto.');
       }
       
       const summaryResult = await summarizeEnvironmentalImpact({
