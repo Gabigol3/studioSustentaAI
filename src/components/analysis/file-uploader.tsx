@@ -63,8 +63,7 @@ export function FileUploader({ onFileSelect, disabled }: FileUploaderProps) {
     }
   };
 
-  const handleDropZoneClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
+  const handleDropZoneClick = () => {
     if (!disabled) {
         fileInputRef.current?.click();
     }
