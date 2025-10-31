@@ -18,7 +18,7 @@ const AnalyzeProductTextInputSchema = z.object({
 export type AnalyzeProductTextInput = z.infer<typeof AnalyzeProductTextInputSchema>;
 
 const AnalyzeProductTextOutputSchema = z.object({
-    isProduct: z.boolean().describe('Indica se o texto descreve um produto comercializável. Não considere alimentos, receitas, pessoas, animais ou paisagens como produtos.'),
+    isProduct: z.boolean().describe('Indica se o texto descreve um produto comercializável, incluindo alimentos (como uma maçã ou um pastel). Não considere conceitos abstratos, receitas, gráficos, pessoas, animais ou paisagens como produtos.'),
     productName: z.string().describe('O nome do produto.'),
     carbonFootprint: z.number().describe('A pegada de carbono do produto em kg CO₂eq, considerando produção, transporte e descarte.'),
     waterFootprint: z.number().describe('A pegada hídrica do produto em litros, incluindo água usada na produção e cadeia de suprimentos.'),
@@ -41,7 +41,7 @@ const analyzeProductTextPrompt = ai.definePrompt({
   name: 'analyzeProductTextPrompt',
   input: {schema: AnalyzeProductTextInputSchema},
   output: {schema: AnalyzeProductTextOutputSchema},
-  prompt: `Você é um especialista em sustentabilidade e análise de ciclo de vida de produtos. Sua primeira tarefa é determinar se o texto fornecido descreve um produto comercializável. Itens como alimentos, receitas, pratos de comida, pessoas, animais ou paisagens não são considerados produtos. Se o texto não for sobre um produto, defina 'isProduct' como 'false' e retorne valores padrão (string vazia, 0) para os outros campos.
+  prompt: `Você é um especialista em sustentabilidade e análise de ciclo de vida de produtos. Sua primeira tarefa é determinar se o texto fornecido descreve um produto comercializável, incluindo alimentos (como "maçã" ou "pastel de frango"). No entanto, conceitos abstratos, receitas, gráficos, pessoas, animais ou paisagens não são considerados produtos. Se o texto não for sobre um produto, defina 'isProduct' como 'false' e retorne valores padrão (string vazia, 0) para os outros campos.
 
   Se o texto for sobre um produto, defina 'isProduct' como 'true' e analise-o para fornecer uma avaliação detalhada de seu impacto socioambiental. Forneça todas as respostas em português.
 
