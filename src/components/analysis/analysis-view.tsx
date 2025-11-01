@@ -2,47 +2,41 @@
 
 import { analyzeProductImage, type AnalyzeProductImageOutput } from '@/ai/flows/analyze-product-image-for-sustainability';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Input } from '../ui/input';
 import { FileUploader } from './file-uploader';
 import { LoadingView } from './loading-view';
 import { ResultsView } from './results-view';
-import { AlertTriangle, RotateCcw, X } from 'lucide-react';
+import { AlertTriangle, RotateCcw } from 'lucide-react';
 import { useFirestore } from '@/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import Image from 'next/image';
 import { analyzeProductText } from '@/ai/flows/analyze-product-text-for-sustainability';
 import { summarizeEnvironmentalImpact } from '@/ai/flows/summarize-environmental-impact';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Label } from '../ui/label';
+import { Textarea } from '../ui/textarea';
 
 type ViewState = 'form' | 'loading' | 'results' | 'error';
 type ResultState = AnalyzeProductImageOutput & { image?: string; summary?: string; };
 
 export function AnalysisView() {
   const [view, setView] = useState<ViewState>('form');
+  const [activeTab, setActiveTab] = useState('text');
   const [analysisResult, setAnalysisResult] = useState<ResultState | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [productName, setProductName] = useState('');
+  const [productDescription, setProductDescription] = useState('');
   const { toast } = useToast();
   const firestore = useFirestore();
 
-  useEffect(() => {
-    if (!file) {
-      setImagePreviewUrl(null);
-      return;
-    }
-    const objectUrl = URL.createObjectURL(file);
-    setImagePreviewUrl(objectUrl);
-
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [file]);
-
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
-    setProductName('');
+    setImagePreviewUrl(URL.createObjectURL(selectedFile));
     toast({
       title: "Imagem selecionada",
       description: selectedFile.name,
@@ -50,13 +44,21 @@ export function AnalysisView() {
   };
   
   const handleAnalyze = async () => {
-    if (!file && !productName) {
+    if (activeTab === 'image' && !file) {
       toast({
         variant: "destructive",
-        title: "Nenhuma entrada fornecida",
-        description: "Por favor, envie uma imagem ou digite o nome de um produto.",
+        title: "Nenhuma imagem fornecida",
+        description: "Por favor, envie uma imagem para análise.",
       });
       return;
+    }
+    if (activeTab === 'text' && !productName) {
+        toast({
+            variant: "destructive",
+            title: "Nenhum nome de produto fornecido",
+            description: "Por favor, digite o nome do produto para análise.",
+        });
+        return;
     }
     
     setView('loading');
@@ -66,7 +68,7 @@ export function AnalysisView() {
       let result: AnalyzeProductImageOutput;
       let imageUrl: string | undefined;
 
-      if (file) {
+      if (activeTab === 'image' && file) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         imageUrl = await new Promise<string>((resolve, reject) => {
@@ -75,7 +77,7 @@ export function AnalysisView() {
         });
         result = await analyzeProductImage({ productDataUri: imageUrl });
 
-      } else if (productName) {
+      } else if (activeTab === 'text' && productName) {
         if (!firestore) {
           throw new Error('O serviço de banco de dados não está disponível. Tente novamente mais tarde.');
         }
@@ -91,9 +93,9 @@ export function AnalysisView() {
               productName: productData.name,
               carbonFootprint: productData.carbonFootprint,
               waterFootprint: productData.waterFootprint,
-              energeticFootprint: 0, // Placeholder, as it's not in the DB
-              ecologicalFootprint: 0, // Placeholder, as it's not in the DB
-              landUse: 0, // Placeholder, as it's not in the DB
+              energeticFootprint: 0,
+              ecologicalFootprint: 0,
+              landUse: 0,
               environmentalImpactDescription: productData.impact, 
               economyScore: productData.economyScore,
               societyScore: productData.societyScore,
@@ -103,7 +105,7 @@ export function AnalysisView() {
             };
             imageUrl = productData.imageUrl;
         } else {
-            result = await analyzeProductText({ productName });
+            result = await analyzeProductText({ productName, productDescription });
         }
       } else {
         throw new Error("Nenhuma entrada para analisar.");
@@ -143,9 +145,15 @@ export function AnalysisView() {
     setError(null);
     setFile(null);
     setProductName('');
+    setProductDescription('');
+    if(imagePreviewUrl) {
+        URL.revokeObjectURL(imagePreviewUrl);
+        setImagePreviewUrl(null);
+    }
   };
 
   const clearFile = () => {
+    if(imagePreviewUrl) URL.revokeObjectURL(imagePreviewUrl);
     setFile(null);
     setImagePreviewUrl(null);
   }
@@ -175,51 +183,61 @@ export function AnalysisView() {
   return (
     <Card className="max-w-2xl mx-auto shadow-lg border-2 border-primary/10">
       <CardHeader className="text-center">
-        <CardTitle className="text-3xl md:text-4xl font-headline">Descubra o impacto ambiental do seu produto</CardTitle>
+        <CardTitle className="text-3xl md:text-4xl font-headline">Descubra o impacto ambiental</CardTitle>
         <CardDescription className="text-base">
-          Envie uma imagem, tire uma foto ou digite o nome do produto para começar.
+          Escolha uma das opções abaixo para analisar um produto.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-2">
-            <Input
-            type="text"
-            placeholder="Ou digite o nome de um produto..."
-            value={productName}
-            onChange={(e) => {
-              setProductName(e.target.value);
-              if (file) setFile(null);
-            }}
-            />
-        </div>
-
-        <div className="relative flex items-center">
-            <div className="flex-grow border-t border-muted-foreground/20"></div>
-            <span className="flex-shrink mx-4 text-muted-foreground text-sm">OU</span>
-            <div className="flex-grow border-t border-muted-foreground/20"></div>
-        </div>
-
-        {imagePreviewUrl ? (
-          <div className="relative aspect-video w-full rounded-lg overflow-hidden">
-            <Image src={imagePreviewUrl} alt="Pré-visualização do produto" fill className="object-cover" />
-            <Button
-              variant="destructive"
-              size="icon"
-              className="absolute top-2 right-2 rounded-full h-8 w-8"
-              onClick={clearFile}
-            >
-              <X className="h-4 w-4" />
-              <span className="sr-only">Remover imagem</span>
-            </Button>
-          </div>
-        ) : (
-          <FileUploader onFileSelect={handleFileSelect} />
-        )}
+      <CardContent>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="text">Texto</TabsTrigger>
+                <TabsTrigger value="image">Imagem</TabsTrigger>
+            </TabsList>
+            <TabsContent value="text" className="space-y-4 pt-4">
+                <div className="space-y-2">
+                    <Label htmlFor="product-name">Nome do Produto</Label>
+                    <Input
+                        id="product-name"
+                        placeholder="Ex: Garrafa de Aço Inoxidável"
+                        value={productName}
+                        onChange={(e) => setProductName(e.target.value)}
+                    />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="product-description">Descrição (Opcional)</Label>
+                    <Textarea
+                        id="product-description"
+                        placeholder="Descreva o produto, seus materiais, origem, etc."
+                        value={productDescription}
+                        onChange={(e) => setProductDescription(e.target.value)}
+                    />
+                </div>
+            </TabsContent>
+            <TabsContent value="image" className="pt-4">
+            {imagePreviewUrl ? (
+                <div className="relative aspect-video w-full rounded-lg overflow-hidden">
+                    <Image src={imagePreviewUrl} alt="Pré-visualização do produto" fill className="object-cover" />
+                    <Button
+                        variant="destructive"
+                        size="icon"
+                        className="absolute top-2 right-2 rounded-full h-8 w-8 z-10"
+                        onClick={clearFile}
+                    >
+                    <RotateCcw className="h-4 w-4" />
+                    <span className="sr-only">Trocar imagem</span>
+                    </Button>
+                </div>
+                ) : (
+                <FileUploader onFileSelect={handleFileSelect} />
+                )}
+            </TabsContent>
+        </Tabs>
         
         <Button
           onClick={handleAnalyze}
-          disabled={!file && !productName}
-          className="w-full text-lg py-6 bg-gradient-to-r from-primary to-green-400 hover:from-primary/90 hover:to-green-400/90 text-primary-foreground font-bold transition-all duration-300 transform hover:scale-105"
+          disabled={(activeTab === 'image' && !file) || (activeTab === 'text' && !productName)}
+          className="w-full text-lg py-6 mt-6 bg-gradient-to-r from-primary to-green-400 hover:from-primary/90 hover:to-green-400/90 text-primary-foreground font-bold transition-all duration-300 transform hover:scale-105"
         >
           Analisar Produto
         </Button>

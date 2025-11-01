@@ -1,7 +1,7 @@
 'use server';
 
 /**
- * @fileOverview Analyzes a product name for sustainability information.
+ * @fileOverview Analyzes a product name and description for sustainability information.
  *
  * - analyzeProductText - A function that handles the product name analysis process.
  * - AnalyzeProductTextInput - The input type for the analyzeProductText function.
@@ -14,6 +14,7 @@ import type { AnalyzeProductImageOutput } from './analyze-product-image-for-sust
 
 const AnalyzeProductTextInputSchema = z.object({
   productName: z.string().describe('The name of a product.'),
+  productDescription: z.string().optional().describe('A description of the product.'),
 });
 export type AnalyzeProductTextInput = z.infer<typeof AnalyzeProductTextInputSchema>;
 
@@ -44,7 +45,7 @@ const analyzeProductTextPrompt = ai.definePrompt({
   name: 'analyzeProductTextPrompt',
   input: {schema: AnalyzeProductTextInputSchema},
   output: {schema: AnalyzeProductTextOutputSchema},
-  prompt: `Você é um especialista em Análise de Ciclo de Vida (ACV) de produtos. Sua tarefa é analisar o nome de um produto e estimar seu impacto socioambiental com base na metodologia ACV. Forneça todas as respostas em português.
+  prompt: `Você é um especialista em Análise de Ciclo de Vida (ACV) de produtos. Sua tarefa é analisar o nome e a descrição de um produto e estimar seu impacto socioambiental com base na metodologia ACV. Forneça todas as respostas em português.
 
 Primeiro, determine se o texto descreve um produto comercializável. Se não for, defina 'isProduct' como 'false' e retorne valores padrão.
 
@@ -53,22 +54,21 @@ Se for um produto, siga a metodologia ACV ("do berço ao túmulo"):
 **Metodologia de Análise de Ciclo de Vida (ACV):**
 
 1.  **Extração de Matérias-Primas:**
-    *   Identifique os materiais prováveis (ex: algodão, plástico PET, metais).
-    *   Estime a pegada de carbono (CO₂eq), hídrica (L), energética (kWh) e de uso da terra (m²) da extração/cultivo. (Ex: mineração de alumínio consome muita energia; cultivo de algodão consome muita água e terra).
+    *   Identifique os materiais prováveis com base no nome e descrição (ex: algodão, plástico PET, metais).
+    *   Estime a pegada de carbono (CO₂eq), hídrica (L), energética (kWh) e de uso da terra (m²) da extração/cultivo.
 
 2.  **Processamento e Manufatura:**
     *   Considere a energia (kWh) gasta para transformar a matéria-prima no produto final.
     *   Inclua o consumo de água e as emissões de CO₂ em processos como tingimento, moldagem, etc.
 
 3.  **Transporte e Distribuição:**
-    *   Estime a origem provável e calcule as emissões do transporte (navio, caminhão, avião) e a energia consumida.
+    *   Estime a origem provável e calcule as emissões do transporte e a energia consumida.
 
 4.  **Fase de Uso:**
-    *   Para eletrônicos, calcule o consumo de energia (kWh) durante a vida útil. Fórmula: Potência (kW) × Horas de uso × Vida útil (anos).
-    *   Para roupas, considere água e energia gastas em lavagens.
+    *   Calcule o consumo de energia (kWh) ou outros recursos durante a vida útil.
 
 5.  **Fim de Vida:**
-    *   Analise o impacto do descarte. Reciclagem pode gerar "crédito" de carbono/energia. Aterro gera emissões de metano.
+    *   Analise o impacto do descarte (reciclagem, aterro).
 
 **Campos a serem preenchidos:**
 
@@ -77,11 +77,11 @@ Se for um produto, siga a metodologia ACV ("do berço ao túmulo"):
 -   **carbonFootprint**: A soma das emissões de CO₂eq de TODAS as fases da ACV (em kg CO₂eq).
 -   **waterFootprint**: A soma do consumo de água em TODAS as fases (em litros).
 -   **energeticFootprint**: A soma do consumo de energia em TODAS as fases (em kWh).
--   **ecologicalFootprint**: Estimativa da área produtiva necessária para sustentar o ciclo de vida do produto (em gha - hectares globais). Considere terra para cultivo/extração, infraestrutura e absorção de CO₂.
+-   **ecologicalFootprint**: Estimativa da área produtiva necessária para sustentar o ciclo de vida (em gha).
 -   **landUse**: A área de terra diretamente ocupada para a produção (em m²).
--   **environmentalImpactDescription**: Uma análise qualitativa detalhada, justificando as estimativas. Descreva os "hotspots" (as fases de maior impacto).
--   **economyScore** (0-100): Avalie a durabilidade, reparabilidade e circularidade.
--   **societyScore** (0-100): Considere as condições de trabalho e práticas de comércio justo.
+-   **environmentalImpactDescription**: Uma análise qualitativa detalhada, justificando as estimativas.
+-   **economyScore** (0-100): Avalie durabilidade, reparabilidade, circularidade.
+-   **societyScore** (0-100): Considere condições de trabalho, comércio justo.
 -   **environmentScore** (0-100): Pontuação baseada no impacto ambiental consolidado.
 -   **totalScore**: Média ponderada (40% environmentScore, 30% societyScore, 30% economyScore).
 -   **sustainabilityCategory**:
@@ -89,7 +89,9 @@ Se for um produto, siga a metodologia ACV ("do berço ao túmulo"):
     - 40-69: "Regular"
     - 0-39: "Alto Impacto"
 
-Nome do produto para análise: {{{productName}}}
+Dados para análise:
+- Nome do produto: {{{productName}}}
+- Descrição: {{{productDescription}}}
 
 Seja rigoroso e baseie sua análise em dados e princípios de ACV conhecidos. Forneça a resposta no formato JSON solicitado.
   `,
