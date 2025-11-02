@@ -10,7 +10,7 @@
     --card-foreground: 120 25% 15%;
     --popover: 0 0% 100%;
     --popover-foreground: 120 25% 15%;
-    --primary: hsl(var(--ods-color, 100 45% 60%));
+    --primary: 100 45% 60%;
     --primary-foreground: 100 25% 15%;
     --secondary: 137 30% 90%;
     --secondary-foreground: 120 25% 15%;
@@ -22,7 +22,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
-    --ring: hsl(var(--ods-color, 100 45% 60%));
+    --ring: 100 45% 60%;
     --radius: 0.5rem;
 
     --success: 120 40% 55%;
@@ -43,7 +43,7 @@
     --card-foreground: 137 20% 90%;
     --popover: 120 10% 10%;
     --popover-foreground: 137 20% 90%;
-    --primary: hsl(var(--ods-color, 100 53% 73%));
+    --primary: 100 53% 73%;
     --primary-foreground: 100 25% 10%;
     --secondary: 120 10% 18%;
     --secondary-foreground: 137 20% 90%;
@@ -55,7 +55,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 120 10% 20%;
     --input: 120 10% 20%;
-    --ring: hsl(var(--ods-color, 100 53% 73%));
+    --ring: 100 53% 73%;
 
     --success: 120 50% 60%;
     --warning: 45 90% 60%;
