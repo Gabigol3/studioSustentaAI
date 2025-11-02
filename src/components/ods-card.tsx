@@ -15,7 +15,6 @@ type Ods = {
 
 export function OdsCard({ ods }: { ods: Ods }) {
     const odsImage = ods.imageId ? PlaceHolderImages.find(p => p.id === ods.imageId) : null;
-    const Icon = ods.icon as LucideIcon;
   
   return (
     <Card className={cn(
@@ -33,21 +32,20 @@ export function OdsCard({ ods }: { ods: Ods }) {
                     data-ai-hint={odsImage.imageHint}
                 />
             </div>
-        ) : (
-            <div className={cn(
-              "w-16 h-16 rounded-lg flex items-center justify-center mb-4",
-              ods.highlighted ? "bg-primary/20" : "bg-secondary"
-            )}>
-              {Icon && typeof Icon !== 'string' ? (
-                <Icon className="w-8 h-8 text-primary" />
-              ) : (
-                <span className="text-2xl font-bold text-muted-foreground">{ods.icon}</span>
-              )}
-            </div>
-        )}
-        <CardTitle className="text-xl font-headline">{ods.title}</CardTitle>
+        ) : null}
+        <div className='flex items-center gap-3'>
+            {ods.id && (
+                <div className={cn(
+                    "flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg",
+                    ods.highlighted ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
+                )}>
+                    {ods.id}
+                </div>
+            )}
+            <CardTitle className="text-xl font-headline">{ods.title}</CardTitle>
+        </div>
       </CardHeader>
-      <CardContent className="flex-grow">
+      <CardContent className="flex-grow pt-0">
         <CardDescription>{ods.description}</CardDescription>
       </CardContent>
     </Card>
