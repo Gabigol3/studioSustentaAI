@@ -33,19 +33,19 @@
     {
       "id": "product-bottle",
       "description": "Eco-friendly thermal bottle",
-      "imageUrl": "https://images.unsplash.com/photo-1544003484-3cd181d17917?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3YXRlciUyMGJvdHRsZXxlbnwwfHx8fDE3NjE5MTI4MzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1616118132534-381148898bb4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3YXRlciUyMGJvdHRsZXxlbnwwfHx8fDE3NjIwMTc2MjR8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "water bottle"
     },
     {
       "id": "product-shirt",
       "description": "Organic cotton t-shirt",
-      "imageUrl": "https://images.unsplash.com/photo-1516177609387-9bad55a45194?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx0LXNoaXJ0fGVufDB8fHx8MTc2MTg3NjEwMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1711641066067-3c1d03492345?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8dC1zaGlydHxlbnwwfHx8fDE3NjIwMDYwNzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "t-shirt"
     },
     {
       "id": "product-shoes",
       "description": "Recycled material sneakers",
-      "imageUrl": "https://images.unsplash.com/photo-1560769629-975ec94e6a86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzaG9lc3xlbnwwfHx8fDE3NjE4ODAxMjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1549298916-b41d501d3772?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzaG9lc3xlbnwwfHx8fDE3NjIwOTcwODR8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "shoes"
     },
     {
@@ -63,32 +63,56 @@
     {
       "id": "product-chair",
       "description": "A wooden chair with a simple design.",
-      "imageUrl": "https://images.unsplash.com/photo-1656870916547-9e6a8a17f6e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3b29kZW4lMjBjaGFpcnxlbnwwfHx8fDE3NjE5NTE2MjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1488410384625-f46b0360fc49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b29kZW4lMjBjaGFpcnxlbnwwfHx8fDE3NjIwNTYwNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "wooden chair"
     },
     {
       "id": "product-straws",
       "description": "Reusable stainless steel straws.",
-      "imageUrl": "https://images.unsplash.com/photo-1615723093553-79c2cddfc99b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxyZXVzYWJsZSUyMHN0cmF3c3xlbnwwfHx8fDE3NjE5NTE2MjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1615723093553-79c2cddfc99b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxyZXVzYWJsZSUyMHN0cmF3c3xlbnwwfHx8fDE3NjIwOTcwODR8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "reusable straws"
     },
     {
       "id": "product-led-bulbs",
       "description": "Energy efficient LED light bulbs.",
-      "imageUrl": "https://images.unsplash.com/photo-1727526496485-8eea8233e20d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxsZWQlMjBidWxifGVufDB8fHx8MTc2MTk1MTYyNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1532007271951-c487760934ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxsZWQlMjBidWxifGVufDB8fHx8MTc2MjA2MDk5N3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "led bulb"
     },
     {
       "id": "product-composter",
       "description": "A home composting bin.",
-      "imageUrl": "https://images.unsplash.com/photo-1669814368814-b5f10a03cc61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjb21wb3N0ZXJ8ZW58MHx8fHwxNzYxOTUxNjI1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1761779395620-70480ae25c02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjb21wb3N0ZXJ8ZW58MHx8fHwxNzYyMDk3MDg0fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "composter"
     },
     {
       "id": "product-shampoo-bar",
       "description": "A solid shampoo bar with no plastic packaging.",
-      "imageUrl": "https://images.unsplash.com/photo-1614530964370-e72b2b327557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzaGFtcG9vJTIwYmFyfGVufDB8fHx8MTc2MTg3MjQ1M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1614530968358-4f14053fbd78?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzaGFtcG9vJTIwYmFyfGVufDB8fHx8MTc2MjA5NzA4NHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "shampoo bar"
+    },
+    {
+      "id": "product-ecobag",
+      "description": "A reusable shopping bag (ecobag).",
+      "imageUrl": "https://images.unsplash.com/photo-1604118464816-5e2bd7b863c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzaG9wcGluZyUyMGJhZ3xlbnwwfHx8fDE3NjIwNjM5MzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "shopping bag"
+    },
+    {
+      "id": "product-bamboo-toothbrush",
+      "description": "A bamboo toothbrush.",
+      "imageUrl": "https://images.unsplash.com/photo-1592372554345-22ced975691d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxiYW1ib28lMjB0b290aGJydXNofGVufDB8fHx8MTc2MjAzMDg3MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bamboo toothbrush"
+    },
+    {
+      "id": "product-organic-coffee",
+      "description": "A bag of organic coffee beans.",
+      "imageUrl": "https://images.unsplash.com/photo-1574081106041-f16966db53d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxvcmdhbmljJTIwY29mZmVlfGVufDB8fHx8MTc2MjA5NzA4NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "organic coffee"
+    },
+    {
+      "id": "product-menstrual-cup",
+      "description": "A reusable menstrual cup.",
+      "imageUrl": "https://images.unsplash.com/photo-1606226287089-5b5896241e11?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtZW5zdHJ1YWwlMjBjdXB8ZW58MHx8fHwxNzYyMDk3MDg0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "menstrual cup"
     }
   ]
 }
