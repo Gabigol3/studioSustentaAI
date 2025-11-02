@@ -207,16 +207,14 @@ export const RECOMMENDED_PRODUCTS: RecommendedProduct[] = [
       usesWood: false,
     },
     {
-      name: "Coletor Menstrual",
-      price: "R$ 79,90",
-      summary: "Uma única unidade pode durar anos, substituindo milhares de absorventes descartáveis.",
-      storeUrl: "https://www.shopee.com.br/search?keyword=coletor+menstrual",
+      name: "Marmita de Vidro",
+      price: "R$ 45,90",
+      summary: "Substitua potes de plástico por uma opção durável e segura para armazenar seus alimentos.",
+      storeUrl: "https://www.shopee.com.br/search?keyword=marmita+de+vidro",
       recommendation: "muito",
       sustainability: { label: "Sustentável", icon: "🌿" },
-      image: PlaceHolderImages.find(p => p.id === "product-menstrual-cup"),
-      electricalFootprint: 0,
+      image: PlaceHolderImages.find(p => p.id === "product-glass-container"),
+      electricalFootprint: 1.2,
       usesWood: false,
     }
 ];
-
-    
