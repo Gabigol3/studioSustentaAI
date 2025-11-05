@@ -1,11 +1,11 @@
 {
   "name": "SustentaAI",
   "short_name": "SustentaAI",
+  "description": "Analise o impacto ambiental de produtos com SustentaAI.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F0FAF3",
-  "theme_color": "#A7D98B",
-  "description": "Analise o impacto ambiental de produtos com SustentaAI.",
+  "background_color": "#F0FBF3",
+  "theme_color": "#8EC278",
   "icons": [
     {
       "src": "/icons/icon-192x192.png",
