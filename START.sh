@@ -18,7 +18,7 @@ fi
 cd "$(dirname "$0")"
 
 echo "Instalando dependências... Por favor, aguarde."
-npm install
+npm install --legacy-peer-deps
 
 echo ""
 echo "Dependências instaladas com sucesso!"
