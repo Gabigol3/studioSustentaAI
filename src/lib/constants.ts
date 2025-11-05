@@ -63,7 +63,7 @@ export const ODS_DATA: OdsDataItem[] = [
 export const TEAM_MEMBERS = [
     { name: "Gabriel Pedro Ramos", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor", photoUrl: "/team/gabriel.jpg" },
     { name: "Pedro Henrique Marcelino", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor", photoUrl: "/team/pedro-marcelino.jpg" },
-    { name: "Pedro Henrique de Lima Silveira", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor", photoUrl: "/team/pedro-silveira.jpg" },
+    { name: "Pedro Henrique de Lima Silveira", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor", photoUrl: "/team/pedro.jpeg" },
     { name: "Vinícius Gabriel Landgraff de Carli", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Designer", photoUrl: "/team/vinicius.jpg" },
     { name: "Rodrigo Fernandes de Oliveira", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor", photoUrl: "/team/rodrigo.jpg" },
 ];

@@ -12,14 +12,13 @@ type TeamMember = {
 export function TeamMemberCard({ member }: { member: TeamMember }) {
   return (
     <Card className="text-center overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 group">
-      <div className="relative aspect-square w-full overflow-hidden">
+      <div className="relative aspect-square w-full overflow-hidden bg-secondary">
           {member.photoUrl ? (
                <Image
                   src={member.photoUrl}
                   alt={member.name}
-                  width={400}
-                  height={400}
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  fill
+                  className="object-contain group-hover:scale-105 transition-transform duration-300"
               />
           ) : (
               <div className="w-full h-full bg-secondary flex items-center justify-center">
