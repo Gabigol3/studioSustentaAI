@@ -14,6 +14,9 @@ then
     exit 1
 fi
 
+# Muda para o diretório do script para garantir que os comandos rodem na pasta do projeto
+cd "$(dirname "$0")"
+
 echo "Instalando dependências... Por favor, aguarde."
 npm install
 
