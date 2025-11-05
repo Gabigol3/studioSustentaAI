@@ -1,7 +1,7 @@
 @echo off
 
-:: Verifica se o npm está instalado
-npm -v >nul 2>nul
+REM Verifica se o npm está instalado
+npm --version >nul 2>nul
 if %errorlevel% neq 0 (
     echo ------------------------------------------------------------------
     echo Erro: O Node.js e o npm nao foram encontrados no seu sistema.
@@ -15,14 +15,16 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-:: Muda para o diretório do script para garantir que os comandos rodem na pasta do projeto
+REM Muda para o diretório do script para garantir que os comandos rodem na pasta do projeto
 cd /d "%~dp0"
 
 echo Instalando dependencias... Por favor, aguarde.
-npm install
+npm install --legacy-peer-deps
 
 echo.
 echo Dependencias instaladas com sucesso!
 echo.
 echo Iniciando o servidor de desenvolvimento e abrindo o navegador...
-npm run dev -- --open
+start npm run dev -- --open
+
+pause
