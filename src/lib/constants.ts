@@ -61,11 +61,11 @@ export const ODS_DATA: OdsDataItem[] = [
 ];
 
 export const TEAM_MEMBERS = [
-    { name: "Gabriel Pedro Ramos", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor Principal", imageId: "team-member-1" },
-    { name: "Pedro Henrique Marcelino", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor Secundário", imageId: "team-member-2" },
-    { name: "Pedro Henrique de Lima Silveira", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Designer", imageId: "team-member-3" },
-    { name: "Vinícius Gabriel Landgraff de Carli", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Designer", imageId: "team-member-4" },
-    { name: "Rodrigo Fernandes de Oliveira", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Analista de Dados", imageId: "team-member-5" },
+    { name: "Gabriel Pedro Ramos", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor Principal", photoUrl: "/team/gabriel.jpg" },
+    { name: "Pedro Henrique Marcelino", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Desenvolvedor Secundário", photoUrl: "/team/pedro-marcelino.jpg" },
+    { name: "Pedro Henrique de Lima Silveira", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Designer", photoUrl: "/team/pedro-silveira.jpg" },
+    { name: "Vinícius Gabriel Landgraff de Carli", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Designer", photoUrl: "/team/vinicius.jpg" },
+    { name: "Rodrigo Fernandes de Oliveira", course: "Desenvolvimento e sistemas da informação", year: "1º Ano", role: "Analista de Dados", photoUrl: "/team/rodrigo.jpg" },
 ];
 
 export type RecommendedProduct = {

@@ -1,4 +1,3 @@
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import Image from 'next/image';
 import { Card, CardContent } from './ui/card';
 
@@ -7,22 +6,20 @@ type TeamMember = {
   course: string;
   year: string;
   role: string;
-  imageId: string;
+  photoUrl: string;
 };
 
 export function TeamMemberCard({ member }: { member: TeamMember }) {
-  const memberImage = PlaceHolderImages.find(p => p.id === member.imageId);
-  
   return (
     <Card className="text-center overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 group">
       <div className="relative aspect-square w-full overflow-hidden">
-          {memberImage ? (
+          {member.photoUrl ? (
                <Image
-                  src={memberImage.imageUrl}
+                  src={member.photoUrl}
                   alt={member.name}
-                  fill
+                  width={400}
+                  height={400}
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  data-ai-hint={memberImage.imageHint}
               />
           ) : (
               <div className="w-full h-full bg-secondary flex items-center justify-center">
