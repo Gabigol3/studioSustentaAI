@@ -1,128 +1,59 @@
-
 @echo off
-chcp 65001 >nul
-setlocal enabledelayedexpansion
+REM Define o conjunto de caracteres para UTF-8 para evitar problemas de acentuacao.
+chcp 65001 > nul
 
-echo ====================================================================
-echo   Studio Sustenta AI - Instalador com Correcao de Proxy
-echo ====================================================================
+echo =================================================
+echo  Iniciador do Projeto SustentaAI
+echo =================================================
 echo.
 
-REM Verifica se o npm está instalado
-echo [1/5] Verificando instalacao do Node.js e npm...
-npm --version >nul 2>nul
+REM Passo 1: Mudar para o diretorio do projeto
+echo [1/3] Acessando a pasta do projeto...
+cd /d "%~dp0"
+echo      Pronto.
+echo.
+
+REM Passo 2: Verificar se o Node.js/npm esta instalado
+echo [2/3] Verificando a instalacao do Node.js e npm...
+npm --version > nul 2> nul
 if %errorlevel% neq 0 (
     echo.
-    echo [ERRO] Node.js/npm nao encontrado!
+    echo      [ERRO] Node.js e npm nao encontrados.
     echo.
-    echo Para resolver:
-    echo   1. Acesse: https://nodejs.org/
-    echo   2. Baixe e instale a versao LTS (v20.x ou superior)
-    echo   3. Reinicie este terminal
-    echo   4. Execute este script novamente
+    echo      Para rodar o projeto, por favor, instale a versao LTS:
+    echo      https://nodejs.org/
+    echo.
+    echo      Depois da instalacao, feche e abra este terminal e tente novamente.
     echo.
     pause
     exit /b 1
 )
-
-for /f "tokens=*" %%i in ('node --version') do set NODE_VERSION=%%i
-echo    Node.js: %NODE_VERSION%
-echo    [AVISO] Versao recomendada: v20.x ou superior
+echo      Node.js e npm encontrados.
 echo.
 
-REM Muda para o diretório do script
-cd /d "%~dp0"
-
-echo [2/5] Configurando npm para resolver erro SSL...
-echo    - Limpando cache
-npm cache clean --force >nul 2>nul
-
-echo    - Removendo configuracoes de proxy antigas
-npm config delete proxy >nul 2>nul
-npm config delete https-proxy >nul 2>nul
-
-echo    - Configurando registry HTTP (contorna problema SSL)
-npm config set registry http://registry.npmjs.org/
-
-echo    - Desabilitando verificacao SSL estrita
-npm config set strict-ssl false
-
+REM Passo 3: Instalar as dependencias
+echo [3/3] Instalando dependencias do projeto. Isso pode levar alguns minutos...
+echo      (Usando --legacy-peer-deps para resolver conflitos)
 echo.
-echo [3/5] Tentando instalacao das dependencias...
-echo    Metodo 1: npm install com --legacy-peer-deps
-echo.
-
 npm install --legacy-peer-deps
 
 if %errorlevel% neq 0 (
     echo.
-    echo [AVISO] Metodo 1 falhou. Tentando metodo alternativo...
-    echo    Metodo 2: npm install com configuracoes adicionais
+    echo      [ERRO] A instalacao das dependencias falhou.
+    echo      Verifique a saida de erro acima para mais detalhes.
     echo.
-    
-    npm install --legacy-peer-deps --prefer-offline --no-audit
-    
-    if %errorlevel% neq 0 (
-        echo.
-        echo [ERRO] Falha na instalacao!
-        echo.
-        echo O erro EPROTO geralmente indica:
-        echo   - Proxy corporativo bloqueando conexoes
-        echo   - Firewall interferindo nas requisicoes
-        echo   - Antivirus escaneando trafego HTTPS
-        echo.
-        echo Solucoes:
-        echo   1. Entre em contato com TI para configurar proxy:
-        echo      npm config set proxy http://usuario:senha@proxy:porta
-        echo      npm config set https-proxy http://usuario:senha@proxy:porta
-        echo.
-        echo   2. Tente em outra rede (ex: rede domestica/4G)
-        echo.
-        echo   3. Atualize Node.js para v20.x LTS:
-        echo      https://nodejs.org/
-        echo.
-        echo   4. Use o instalador offline (se disponivel)
-        echo.
-        pause
-        exit /b 1
-    )
-)
-
-echo.
-echo [4/5] Restaurando configuracoes de seguranca...
-npm config set strict-ssl true
-npm config set registry https://registry.npmjs.org/
-
-echo.
-echo [5/5] Verificando instalacao...
-if exist "node_modules" (
-    echo    [OK] Dependencias instaladas com sucesso!
-) else (
-    echo    [ERRO] Pasta node_modules nao encontrada
     pause
     exit /b 1
 )
 
 echo.
-echo ====================================================================
-echo   Instalacao concluida!
-echo ====================================================================
+echo =================================================
+echo  Dependencias instaladas com sucesso!
+echo =================================================
 echo.
-echo Deseja iniciar o servidor de desenvolvimento agora? (S/N)
-choice /C SN /N /M "Pressione S para Sim ou N para Nao: "
 
-if errorlevel 2 (
-    echo.
-    echo Para iniciar manualmente, execute: npm run dev
-    echo.
-    pause
-    exit /b 0
-)
+echo Iniciando o servidor de desenvolvimento...
+npm run dev -- --open
 
 echo.
-echo Iniciando servidor...
-echo Pressione Ctrl+C para parar o servidor
-echo.
-npm run dev
-
 pause
