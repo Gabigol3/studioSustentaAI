@@ -1,32 +1,45 @@
 @echo off
-REM Muda para o diretório do script para garantir que os comandos rodem na pasta do projeto
-cd /d "%~dp0"
+echo ====================================================================
+echo   Studio Sustenta AI - Instalador
+echo ====================================================================
+echo.
 
-echo Verificando se o Node.js e npm estao instalados...
+REM Verifica se o npm está instalado
+echo Verificando instalacao do Node.js e npm...
 npm --version >nul 2>nul
 if %errorlevel% neq 0 (
-    echo ------------------------------------------------------------------
-    echo Erro: O Node.js e o npm nao foram encontrados no seu sistema.
-    echo Para rodar este projeto, voce precisa instala-los.
     echo.
-    echo 1. Acesse https://nodejs.org/ para baixar e instalar a versao LTS.
-    echo 2. Apos a instalacao, feche e reabra este terminal.
-    echo 3. Tente executar este script novamente.
-    echo ------------------------------------------------------------------
+    echo [ERRO] Node.js e npm nao encontrados. Por favor, instale a versao LTS a partir de https://nodejs.org/ e tente novamente.
+    echo.
     pause
-    exit /b
+    exit /b 1
 )
+echo Node.js e npm encontrados.
+echo.
 
-echo Instalando dependencias com --legacy-peer-deps... Por favor, aguarde.
+REM Muda para o diretório do script
+cd /d "%~dp0"
+
+echo Instalando dependencias do projeto... (Isso pode levar alguns minutos)
 npm install --legacy-peer-deps
+
+if %errorlevel% neq 0 (
+    echo.
+    echo [ERRO] Falha na instalacao das dependencias. O erro pode ser relacionado a proxy ou firewall.
+    echo Por favor, verifique sua conexao e tente executar o START.bat novamente.
+    echo.
+    pause
+    exit /b 1
+)
 
 echo.
 echo Dependencias instaladas com sucesso!
 echo.
-echo Iniciando o servidor de desenvolvimento...
+echo Iniciando o servidor de desenvolvimento e abrindo o navegador...
+echo Pressione Ctrl+C no terminal para parar o servidor.
+
 npm run dev -- --open
 
 echo.
-echo O servidor foi iniciado. Se a janela do navegador nao abriu, acesse http://localhost:3000
-echo.
+echo Servidor finalizado.
 pause
