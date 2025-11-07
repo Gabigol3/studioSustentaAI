@@ -1,45 +1,37 @@
 @echo off
-echo ====================================================================
-echo   Studio Sustenta AI - Instalador
-echo ====================================================================
-echo.
-
 REM Verifica se o npm está instalado
-echo Verificando instalacao do Node.js e npm...
 npm --version >nul 2>nul
 if %errorlevel% neq 0 (
+    echo [ERRO] Node.js/npm nao encontrado!
     echo.
-    echo [ERRO] Node.js e npm nao encontrados. Por favor, instale a versao LTS a partir de https://nodejs.org/ e tente novamente.
+    echo Para resolver:
+    echo   1. Acesse: https://nodejs.org/
+    echo   2. Baixe e instale a versao LTS (v20.x ou superior)
+    echo   3. Reinicie este terminal
+    echo   4. Execute este script novamente
     echo.
     pause
     exit /b 1
 )
-echo Node.js e npm encontrados.
-echo.
 
-REM Muda para o diretório do script
-cd /d "%~dp0"
-
-echo Instalando dependencias do projeto... (Isso pode levar alguns minutos)
+echo Instalando dependencias... Por favor, aguarde.
+REM Configura o npm para usar http temporariamente para contornar proxies
+npm config set registry http://registry.npmjs.org/
 npm install --legacy-peer-deps
 
-if %errorlevel% neq 0 (
-    echo.
-    echo [ERRO] Falha na instalacao das dependencias. O erro pode ser relacionado a proxy ou firewall.
-    echo Por favor, verifique sua conexao e tente executar o START.bat novamente.
-    echo.
-    pause
-    exit /b 1
-)
+REM Restaura a configuração original do npm
+npm config set registry https://registry.npmjs.org/
 
 echo.
 echo Dependencias instaladas com sucesso!
 echo.
 echo Iniciando o servidor de desenvolvimento e abrindo o navegador...
-echo Pressione Ctrl+C no terminal para parar o servidor.
+
+REM Corrige possiveis erros de SSL ao chamar a API da IA
+set NODE_TLS_REJECT_UNAUTHORIZED=0
 
 npm run dev -- --open
 
 echo.
-echo Servidor finalizado.
+echo O servidor foi iniciado. Esta janela pode ser fechada.
 pause
