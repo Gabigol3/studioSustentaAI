@@ -22,6 +22,50 @@ import { Textarea } from '../ui/textarea';
 type ViewState = 'form' | 'loading' | 'results' | 'error';
 type ResultState = AnalyzeProductImageOutput & { image?: string; summary?: string; };
 
+const MAX_IMAGE_WIDTH = 1280;
+const MAX_IMAGE_HEIGHT = 720;
+const IMAGE_QUALITY = 0.8;
+
+// Função para redimensionar a imagem no cliente
+const resizeImage = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = document.createElement('img');
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let { width, height } = img;
+
+        if (width > height) {
+          if (width > MAX_IMAGE_WIDTH) {
+            height *= MAX_IMAGE_WIDTH / width;
+            width = MAX_IMAGE_WIDTH;
+          }
+        } else {
+          if (height > MAX_IMAGE_HEIGHT) {
+            width *= MAX_IMAGE_HEIGHT / height;
+            height = MAX_IMAGE_HEIGHT;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          return reject(new Error('Não foi possível obter o contexto do canvas.'));
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', IMAGE_QUALITY));
+      };
+      img.onerror = reject;
+    };
+    reader.onerror = reject;
+  });
+};
+
+
 export function AnalysisView() {
   const [view, setView] = useState<ViewState>('form');
   const [activeTab, setActiveTab] = useState('text');
@@ -69,14 +113,9 @@ export function AnalysisView() {
       let imageUrl: string | undefined;
 
       if (activeTab === 'image' && file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        imageUrl = await new Promise<string>((resolve, reject) => {
-          reader.onload = () => resolve(reader.result as string);
-          reader.onerror = () => reject('Erro ao processar o arquivo de imagem.');
-        });
+        // Redimensiona a imagem ANTES de enviar
+        imageUrl = await resizeImage(file);
         result = await analyzeProductImage({ productDataUri: imageUrl });
-
       } else if (activeTab === 'text' && productName) {
         if (!firestore) {
           throw new Error('O serviço de banco de dados não está disponível. Tente novamente mais tarde.');
@@ -132,7 +171,7 @@ export function AnalysisView() {
       } else if (e.message && e.message.includes('Produto não reconhecido')) {
         setError(e.message);
       } else if (e.message && e.message.toLowerCase().includes('body exceeded')) {
-        setError('A imagem é muito grande. Por favor, tente uma foto com menor resolução.');
+        setError('Ocorreu um erro no envio. A imagem pode ser muito grande, mesmo após a otimização. Tente novamente.');
       } else {
         setError('Ocorreu um erro na análise. Verifique sua conexão ou tente novamente mais tarde.');
       }
