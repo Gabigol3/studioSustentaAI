@@ -126,14 +126,15 @@ export function AnalysisView() {
       setView('results');
 
     } catch (e: any) {
-      console.error(e);
+      console.error("Erro detalhado da análise:", e);
       if (e.message && (e.message.toLowerCase().includes('quota') || e.message.toLowerCase().includes('rate limit'))) {
         setError('Limite diário de análises atingido. Por favor, tente novamente amanhã.');
       } else if (e.message && e.message.includes('Produto não reconhecido')) {
         setError(e.message);
-      }
-      else {
-        setError('Ocorreu um erro na análise. Por favor, tente novamente mais tarde.');
+      } else if (e.message && e.message.toLowerCase().includes('body exceeded')) {
+        setError('A imagem é muito grande. Por favor, tente uma foto com menor resolução.');
+      } else {
+        setError('Ocorreu um erro na análise. Verifique sua conexão ou tente novamente mais tarde.');
       }
       setView('error');
     }
