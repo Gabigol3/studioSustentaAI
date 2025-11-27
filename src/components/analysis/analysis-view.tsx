@@ -18,6 +18,7 @@ import { summarizeEnvironmentalImpact } from '@/ai/flows/summarize-environmental
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
+import { generateProductImage } from '@/ai/flows/generate-product-image';
 
 type ViewState = 'form' | 'loading' | 'results' | 'error';
 type ResultState = AnalyzeProductImageOutput & { image?: string; summary?: string; };
@@ -145,6 +146,10 @@ export function AnalysisView() {
             imageUrl = productData.imageUrl;
         } else {
             result = await analyzeProductText({ productName, productDescription });
+            if (result.isProduct) {
+              const imageResult = await generateProductImage({ productName: result.productName });
+              imageUrl = imageResult.imageDataUri;
+            }
         }
       } else {
         throw new Error("Nenhuma entrada para analisar.");
