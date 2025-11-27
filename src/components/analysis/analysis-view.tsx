@@ -19,7 +19,6 @@ import { summarizeEnvironmentalImpact } from '@/ai/flows/summarize-environmental
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
-import { generateProductImage } from '@/ai/flows/generate-product-image';
 
 type ViewState = 'form' | 'loading' | 'results' | 'error';
 type ResultState = AnalyzeProductImageOutput & { image?: string; summary?: string; };
@@ -147,16 +146,8 @@ export function AnalysisView() {
             imageUrl = productData.imageUrl;
         } else {
             result = await analyzeProductText({ productName, productDescription });
-            if (result.isProduct) {
-              try {
-                const imageResult = await generateProductImage({ productName: result.productName });
-                imageUrl = imageResult.imageDataUri;
-              } catch (imageGenError: any) {
-                console.warn("Falha ao gerar imagem do produto:", imageGenError.message);
-                // Continua o fluxo sem a imagem, ela será um placeholder
-                imageUrl = undefined;
-              }
-            }
+            // Não tentamos mais gerar uma imagem, imageUrl permanecerá undefined
+            imageUrl = undefined;
         }
       } else {
         throw new Error("Nenhuma entrada para analisar.");
@@ -297,5 +288,7 @@ export function AnalysisView() {
     </Card>
   );
 }
+
+    
 
     
