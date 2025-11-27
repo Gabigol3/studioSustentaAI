@@ -1,16 +1,11 @@
 'use client';
 
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-} from 'react-leaflet';
+import { useRef, useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collection } from 'firebase/firestore';
 import { Skeleton } from './ui/skeleton';
-import { Icon } from 'leaflet';
-import { MapPin } from 'lucide-react';
+import L, { Icon, Map as LeafletMap } from 'leaflet';
 
 type GreenArea = {
   id: string;
