@@ -247,6 +247,10 @@ export type Ecopoint = {
     // Pirassununga, SP
     { id: 'pirassununga1', name: 'Ecoponto Jd. Redenção', address: 'Rua dos Imigrantes, s/n, Jd. Redenção', latitude: -21.9961, longitude: -47.4412, city: 'Pirassununga' },
     { id: 'pirassununga2', name: 'Ecoponto Vila Guilhermina', address: 'Av. das Nações, próximo à linha férrea, Vila Guilhermina', latitude: -22.0084, longitude: -47.4205, city: 'Pirassununga' },
+  
+    // Cordeirópolis, SP
+    { id: 'cordeiropolis1', name: 'Ecoponto Jd. Planalto', address: 'Rua Vereador Luiz Marson, s/n, Jd. Planalto', latitude: -22.4770, longitude: -47.4520, city: 'Cordeirópolis' },
+    { id: 'cordeiropolis2', name: 'Ecoponto Jd. Progresso', address: 'Rua dos Cravos, s/n, Jd. Progresso', latitude: -22.4930, longitude: -47.4640, city: 'Cordeirópolis' },
   ];
   
   export type GreenArea = {
@@ -280,3 +284,5 @@ export type Ecopoint = {
       longitude: -47.5325
     }
   ];
+
+    
