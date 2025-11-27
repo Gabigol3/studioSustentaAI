@@ -3,7 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Recycle } from "lucide-react";
 import Link from "next/link";
-import { MapView } from "@/components/map-view";
+import dynamic from 'next/dynamic';
+import { Skeleton } from "@/components/ui/skeleton";
+import 'leaflet/dist/leaflet.css';
+
+// Carrega o mapa dinamicamente para evitar problemas com SSR (Server-Side Rendering)
+const MapView = dynamic(() => import('@/components/map-view').then(mod => mod.MapView), { 
+  ssr: false,
+  loading: () => <Skeleton className="w-full h-full rounded-lg" />
+});
 
 export default function MapPage() {
   const mapsUrl = "https://www.google.com/maps/search/?api=1&query=pontos+de+reciclagem";
