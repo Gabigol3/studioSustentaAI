@@ -1,3 +1,4 @@
+
 'use client';
 
 import { analyzeProductImage, type AnalyzeProductImageOutput } from '@/ai/flows/analyze-product-image-for-sustainability';
@@ -147,8 +148,14 @@ export function AnalysisView() {
         } else {
             result = await analyzeProductText({ productName, productDescription });
             if (result.isProduct) {
-              const imageResult = await generateProductImage({ productName: result.productName });
-              imageUrl = imageResult.imageDataUri;
+              try {
+                const imageResult = await generateProductImage({ productName: result.productName });
+                imageUrl = imageResult.imageDataUri;
+              } catch (imageGenError: any) {
+                console.warn("Falha ao gerar imagem do produto:", imageGenError.message);
+                // Continua o fluxo sem a imagem, ela será um placeholder
+                imageUrl = undefined;
+              }
             }
         }
       } else {
@@ -290,3 +297,5 @@ export function AnalysisView() {
     </Card>
   );
 }
+
+    
