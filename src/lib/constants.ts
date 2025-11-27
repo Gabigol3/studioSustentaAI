@@ -221,3 +221,58 @@ export const RECOMMENDED_PRODUCTS: RecommendedProduct[] = [
       usesWood: false,
     }
 ];
+
+export type Ecopoint = {
+    id: string;
+    name: string;
+    address: string;
+    latitude: number;
+    longitude: number;
+    city: string;
+  };
+  
+  export const ECOPOINTS_DATA: Ecopoint[] = [
+    // Leme, SP
+    { id: 'leme1', name: 'Ecoponto Jd. Empyreo', address: 'Rua João Pacini, s/n, Jd. Empyreo', latitude: -22.1965, longitude: -47.3758, city: 'Leme' },
+    { id: 'leme2', name: 'Ecoponto Jd. Saulo', address: 'Av. José Antônio Masteguin, s/n, Jd. Saulo', latitude: -22.1763, longitude: -47.3821, city: 'Leme' },
+    
+    // Araras, SP
+    { id: 'araras1', name: 'Ecoponto Jd. das Nações (Leste)', address: 'R. Paraguai, s/n, Jd. das Nações', latitude: -22.3612, longitude: -47.3595, city: 'Araras' },
+    { id: 'araras2', name: 'Ecoponto Pq. das Árvores (Norte)', address: 'Rua Sérgio Alves, s/n, Pq. das Árvores', latitude: -22.3368, longitude: -47.3833, city: 'Araras' },
+  
+    // Rio Claro, SP
+    { id: 'rioclaro1', name: 'Ecoponto Cervezão', address: 'Av. 62, anexo a ETE, Cervezão', latitude: -22.3831, longitude: -47.5385, city: 'Rio Claro' },
+    { id: 'rioclaro2', name: 'Ecoponto Jd. das Palmeiras', address: 'Av. 38, com Rua 11, Jd. das Palmeiras', latitude: -22.4284, longitude: -47.5467, city: 'Rio Claro' },
+  ];
+  
+  export type GreenArea = {
+    id: string;
+    name: string;
+    description: string;
+    latitude: number;
+    longitude: number;
+  };
+  
+  export const GREEN_AREAS_DATA: GreenArea[] = [
+    {
+      id: "parque-lago",
+      name: "Parque Municipal Fábio da Silva Prado (Lago)",
+      description: "Principal parque urbano de Araras, com lago, pista de caminhada e áreas de lazer.",
+      latitude: -22.3578,
+      longitude: -47.3776
+    },
+    {
+      id: "horto-leme",
+      name: "Horto Florestal de Leme",
+      description: "Área de conservação com trilhas e rica biodiversidade.",
+      latitude: -22.1834,
+      longitude: -47.3700
+    },
+    {
+      id: "floresta-rio-claro",
+      name: "Floresta Estadual Edmundo Navarro de Andrade",
+      description: "Antigo horto florestal, hoje é uma vasta área de conservação e pesquisa.",
+      latitude: -22.4042,
+      longitude: -47.5325
+    }
+  ];
