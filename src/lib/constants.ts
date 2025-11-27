@@ -243,6 +243,10 @@ export type Ecopoint = {
     // Rio Claro, SP
     { id: 'rioclaro1', name: 'Ecoponto Cervezão', address: 'Av. 62, anexo a ETE, Cervezão', latitude: -22.3831, longitude: -47.5385, city: 'Rio Claro' },
     { id: 'rioclaro2', name: 'Ecoponto Jd. das Palmeiras', address: 'Av. 38, com Rua 11, Jd. das Palmeiras', latitude: -22.4284, longitude: -47.5467, city: 'Rio Claro' },
+
+    // Pirassununga, SP
+    { id: 'pirassununga1', name: 'Ecoponto Jd. Redenção', address: 'Rua dos Imigrantes, s/n, Jd. Redenção', latitude: -21.9961, longitude: -47.4412, city: 'Pirassununga' },
+    { id: 'pirassununga2', name: 'Ecoponto Vila Guilhermina', address: 'Av. das Nações, próximo à linha férrea, Vila Guilhermina', latitude: -22.0084, longitude: -47.4205, city: 'Pirassununga' },
   ];
   
   export type GreenArea = {
